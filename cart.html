@@ -1,224 +1,468 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cart</title>
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/jssor.css">
     <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/product-detail.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <!-- custom js file link  -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="owlcarousel/owl.carousel.min.js"></script>
     <script src="js/script.js" defer></script>
 
 </head>
+
 <body>
 
-<!-- header section starts  -->
+    <!-- header section starts  -->
 
-<header class="header">
+    <header class="header-page">
 
-    <a href="home.html" class="logo"> LOGO </a>
+        <a href="home.html" class="header-logo">
+            <img class="logo logo-mobile" src="images/logo.png" alt="">
+        </a>
 
-    <nav class="navbar">
-        <ul>
-            <li><a href="home.html">home</a></li>
-            <li><a href="products.html">products</a></li>
-            <li><a href="#">pages +</a>
-                <ul>
-                    <li><a href="about.html">about</a></li>
-                    <li><a href="blogs.html">blogs</a></li>
-                </ul>
-            </li>
-            <li><a href="contact.html">contact</a></li>
-            <li><a href="#">account +</a>
-                <ul>
-                    <li><a href="login.html">login</a></li>
-                    <li><a href="register.html">register</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+        <nav class="navbar">
+            <ul>
+                <li><a class="nav-link" href="home.html">Trang chủ</a></li>
+                <li><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                <li><a class="nav-link" href="#">Thông tin</a>
+                    <ul class="pr-20">
+                        <li><a class="nav-link border-bottom" href="about.html">Về chúng tôi</a></li>
+                        <li><a class="nav-link" href="blogs.html">Blogs</a></li>
+                    </ul>
+                </li>
+                <li><a class="nav-link" href="contact.html">Liên hệ</a></li>
+                <li><a class="nav-link" href="#">Tài khoản</a>
+                    <ul class="pr-20">
+                        <li><a class="nav-link border-bottom" href="login.html">Đăng nhập</a></li>
+                        <li><a class="nav-link" href="register.html">Đăng ký</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
 
-    <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div>
-        <div id="search-btn" class="fas fa-search"></div>
-        <a href="cart.html" class="fas fa-shopping-cart"></a>
-    </div>
+        <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search icon-hover"></div>
+            <a href="cart.html" class="fas fa-shopping-cart"></a>
+        </div>
 
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
-        <label for="search-box" class="fas fa-search"></label>
-    </form>
+        <form action="" class="search-form">
+            <input type="search" name="" placeholder="Search here..." id="search-box">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
 
-</header>
+    </header>
 
-<!-- header section ends -->
+    <!-- header section ends -->
 
-<!-- header section  -->
+    <!-- header section  -->
 
-<section class="heading">
-    <h1>shopping cart</h1>
-    <p> <a href="home.html">home</a> >> cart </p>
-</section>
+    <section class="heading">
+        <h1>Giỏ hàng</h1>
+        <p> <a href="home.html">Trang chủ</a> >> Giỏ hàng </p>
+    </section>
 
-<!-- header section -->
+    <!-- header section -->
 
-<!-- cart section starts  -->
+    <!-- cart section starts  -->
 
-<section class="shopping-cart">
+    <section class="shopping-cart">
 
-    <h1 class="title"> your products </h1>
+        <h1 class="title"> Đơn hàng của bạn </h1>
 
-    <div class="box-container">
+        <div class="box-container">
 
-        <div class="box">
-            <i class="fas fa-times"></i>
-            <img src="images/cart-item-1.png" alt="">
-            <div class="content">
-                <h3>premium glasses</h3>
-                <form action="">
-                    <span>quantity :</span>
-                    <input type="number" name="" value="1" id="">
-                </form>
-                <div class="price"> $20.00 <span>$25.00</span> </div>
+            <div class="box">
+                <i class="fas fa-times"></i>
+                <img src="images/pro-2.png" alt="">
+                <div class="content">
+                    <h3>iPhone 13 (128GB) - Chính hãng VN/A</h3>
+                    <form action="">
+                        <span>Số lượng :</span>
+                        <input type="number" name="" value="1" id="">
+                    </form>
+                    <div class="price">
+                        <strong>16,390,000 ₫</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fas fa-times"></i>
+                <img src="images/pro-2.png" alt="">
+                <div class="content">
+                    <h3>iPhone 13 (128GB) - Chính hãng VN/A</h3>
+                    <form action="">
+                        <span>Số lượng :</span>
+                        <input type="number" name="" value="1" id="">
+                    </form>
+                    <div class="price">
+                        <strong>16,390,000 ₫</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fas fa-times"></i>
+                <img src="images/pro-2.png" alt="">
+                <div class="content">
+                    <h3>iPhone 13 (128GB) - Chính hãng VN/A</h3>
+                    <form action="">
+                        <span>Số lượng :</span>
+                        <input type="number" name="" value="1" id="">
+                    </form>
+                    <div class="price">
+                        <strong>16,390,000 ₫</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fas fa-times"></i>
+                <img src="images/pro-2.png" alt="">
+                <div class="content">
+                    <h3>iPhone 13 (128GB) - Chính hãng VN/A</h3>
+                    <form action="">
+                        <span>Số lượng :</span>
+                        <input type="number" name="" value="1" id="">
+                    </form>
+                    <div class="price">
+                        <strong>16,390,000 ₫</strong>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="box">
-            <i class="fas fa-times"></i>
-            <img src="images/cart-item-2.png" alt="">
-            <div class="content">
-                <h3>premium glasses</h3>
-                <form action="">
-                    <span>quantity :</span>
-                    <input type="number" name="" value="1" id="">
-                </form>
-                <div class="price"> $20.00 <span>$25.00</span> </div>
-            </div>
-        </div>
-
-        <div class="box">
-            <i class="fas fa-times"></i>
-            <img src="images/cart-item-3.png" alt="">
-            <div class="content">
-                <h3>premium glasses</h3>
-                <form action="">
-                    <span>quantity :</span>
-                    <input type="number" name="" value="1" id="">
-                </form>
-                <div class="price"> $20.00 <span>$25.00</span> </div>
-            </div>
-        </div>
-
-        <div class="box">
-            <i class="fas fa-times"></i>
-            <img src="images/cart-item-4.png" alt="">
-            <div class="content">
-                <h3>premium glasses</h3>
-                <form action="">
-                    <span>quantity :</span>
-                    <input type="number" name="" value="1" id="">
-                </form>
-                <div class="price"> $20.00 <span>$25.00</span> </div>
-            </div>
-        </div>
-
-        <div class="box">
-            <i class="fas fa-times"></i>
-            <img src="images/cart-item-5.png" alt="">
-            <div class="content">
-                <h3>premium glasses</h3>
-                <form action="">
-                    <span>quantity :</span>
-                    <input type="number" name="" value="1" id="">
-                </form>
-                <div class="price"> $20.00 <span>$25.00</span> </div>
-            </div>
-        </div>
-
-    </div>
-
-    <h1 class="title">checkout cart</h1>
-
-    <div class="cart-total">
-        <h3>subtotal : <span>$100.00</span></h3>
-        <h3>total : <span>$100.00</span></h3>
-        <a href="#" class="btn">proceed to checkout</a>
-    </div>
-
-</section>
-
-<!-- cart section end -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- footer section starts  -->
-
-<section class="footer">
-
-    <div class="box-container">
-
-        <div class="box">
-            <h3>quick links</h3>
-            <a href="home.html"> <i class="fas fa-angle-right"></i> home</a>
-            <a href="products.html"> <i class="fas fa-angle-right"></i> products</a>
-            <a href="about.html"> <i class="fas fa-angle-right"></i> about</a>
-            <a href="blogs.html"> <i class="fas fa-angle-right"></i> blogs</a>
-            <a href="contact.html"> <i class="fas fa-angle-right"></i> contact</a>
-            <a href="login.html"> <i class="fas fa-angle-right"></i> login</a>
-            <a href="register.html"> <i class="fas fa-angle-right"></i> register</a>
-            <a href="cart.html"> <i class="fas fa-angle-right"></i> cart</a>
-        </div>
-
-        <div class="box">
-            <h3>extra links</h3>
-            <a href="#"> <i class="fas fa-angle-right"></i> my account </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> my order </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> my wishlist </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> terms of use </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> privacy policy </a>
-        </div>
-
-        <div class="box">
-            <h3>follow us</h3>
-            <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
-            <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
-            <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
-            <a href="#"> <i class="fab fa-pinterest"></i> pinterest </a>
-            <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
-            <a href="#"> <i class="fab fa-github"></i> github </a>
-        </div>
-
-        <div class="box">
-            <h3>newsletter</h3>
-            <p>subscribe for latest updates</p>
+        <div class="cart-form">
             <form action="">
-                <input type="email" placeholder="enter your emal">
-                <input type="submit" value="subscribe" class="btn">
+                <h3>Thông tin đặt hàng</h3>
+                <p class="text-gray">
+                    <i>Bạn cần nhập đầy đủ các trường thông tin có dấu *</i>
+                </p>
+                <div class="row">
+                    <div class="col">
+                        <div class="control">
+                            <input type="text" name="Title" placeholder="Họ và tên *">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="control">
+                            <input type="tel" name="Phone" placeholder="Số điện thoại *">
+                        </div>
+                    </div>
+                </div>
+                <div class="row shInfo">
+                    <div class="col">
+                        <div class="control">
+                            <input type="email" name="Email" placeholder="Email">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <span class="group">
+                        <strong>Hình thức nhận hàng: </strong>
+                        <span>Nhận trực tiếp tại nhà.</span>
+                    </span>
+                </div>
+                <div id="f_payType_1">
+                    <div class="row">
+                        <div class="col">
+                            <div class="control">
+                                <select name="SystemcityID" id="city" aria-placeholder="Tỉnh/Thành phố *">
+                                    <option value>Tỉnh/Thành phố *</option>
+                                    <!-- <option value="1">H&#224; Nội</option>
+                                    <option value="50">TP HCM</option>
+                                    <option value="57">An Giang</option>
+                                    <option value="49">B&#224; Rịa - Vũng T&#224;u</option>
+                                    <option value="15">Bắc Giang</option>
+                                    <option value="4">Bắc Kạn</option>
+                                    <option value="62">Bạc Li&#234;u</option>
+                                    <option value="18">Bắc Ninh</option>
+                                    <option value="53">Bến Tre</option>
+                                    <option value="35">B&#236;nh Định</option>
+                                    <option value="47">B&#236;nh Dương</option>
+                                    <option value="45">B&#236;nh Phước</option>
+                                    <option value="39">B&#236;nh Thuận</option>
+                                    <option value="63">C&#224; Mau</option>
+                                    <option value="59">Cần Thơ</option>
+                                    <option value="3">Cao Bằng</option>
+                                    <option value="32">Đ&#224; Nẵng</option>
+                                    <option value="42">Đắk Lắk</option>
+                                    <option value="43">Đắk N&#244;ng</option>
+                                    <option value="7">Điện Bi&#234;n</option>
+                                    <option value="48">Đồng Nai</option>
+                                    <option value="56">Đồng Th&#225;p</option>
+                                    <option value="41">Gia Lai</option>
+                                    <option value="2">H&#224; Giang</option>
+                                    <option value="23">H&#224; Nam</option>
+                                    <option value="28">H&#224; Tĩnh</option>
+                                    <option value="19">Hải Dương</option>
+                                    <option value="20">Hải Ph&#242;ng</option>
+                                    <option value="60">Hậu Giang</option>
+                                    <option value="11">Ho&#224; B&#236;nh</option>
+                                    <option value="21">Hưng Y&#234;n</option>
+                                    <option value="37">Kh&#225;nh H&#242;a</option>
+                                    <option value="58">Ki&#234;n Giang</option>
+                                    <option value="40">Kon Tum</option>
+                                    <option value="8">Lai Ch&#226;u</option>
+                                    <option value="44">L&#226;m Đồng</option>
+                                    <option value="13">Lạng Sơn</option>
+                                    <option value="6">L&#224;o Cai</option>
+                                    <option value="51">Long An</option>
+                                    <option value="24">Nam Định</option>
+                                    <option value="27">Nghệ An</option>
+                                    <option value="25">Ninh B&#236;nh</option>
+                                    <option value="38">Ninh Thuận</option>
+                                    <option value="16">Ph&#250; Thọ</option>
+                                    <option value="36">Ph&#250; Y&#234;n</option>
+                                    <option value="29">Quảng B&#236;nh</option>
+                                    <option value="33">Quảng Nam</option>
+                                    <option value="34">Quảng Ng&#227;i</option>
+                                    <option value="14">Quảng Ninh</option>
+                                    <option value="30">Quảng Trị</option>
+                                    <option value="61">S&#243;c Trăng</option>
+                                    <option value="9">Sơn La</option>
+                                    <option value="46">T&#226;y Ninh</option>
+                                    <option value="22">Th&#225;i B&#236;nh</option>
+                                    <option value="12">Th&#225;i Nguy&#234;n</option>
+                                    <option value="26">Thanh H&#243;a</option>
+                                    <option value="31">Thừa Thi&#234;n Huế</option>
+                                    <option value="52">Tiền Giang</option>
+                                    <option value="54">Tr&#224; Vinh</option>
+                                    <option value="5">Tuy&#234;n Quang</option>
+                                    <option value="55">Vĩnh Long</option>
+                                    <option value="17">Vĩnh Ph&#250;c</option>
+                                    <option value="10">Y&#234;n B&#225;i</option>    -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="control">
+                                <select name="SystemDistrictID" id="district" aria-placeholder="Quận/Huyện *">
+                                    <option value="">Quận/Huyện *</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row shInfo">
+                        <div class="col">
+                            <div class="control">
+                                <input type="text" id="Address" name="Address" placeholder="Địa chỉ nhận hàng *">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row shInfo">
+                    <div class="control-button">
+                        <button type="submit">XÁC NHẬN VÀ ĐẶT HÀNG</button>
+                    </div>
+                </div>
             </form>
         </div>
 
-    </div>
+    </section>
 
-    <div class="credit"> created by <span>mr .web designer</span> | all rights reserved </div>
+    <!-- cart section end -->
 
-</section>
 
-<!-- footer section ends -->
 
+
+
+    <!-- core value -->
+    <section>
+        <div class="container">
+            <div class="corevalue">
+                <div class="item">
+                    <span class="corevalue-icon">
+                        <i class="fa-regular fa-circle-check"></i>
+                    </span>
+                    <div class="corevalue-content">
+                        <span>Sản phẩm</span>
+                        <strong>Chính hãng</strong>
+                    </div>
+                </div>
+                <div class="item">
+                    <span class="corevalue-icon">
+                        <i class="fa-solid fa-truck-front"></i>
+                    </span>
+                    <div class="corevalue-content">
+                        <span>Giao hàng</span>
+                        <strong>Miễn phí</strong>
+                    </div>
+                </div>
+                <div class="item">
+                    <span class="corevalue-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </span>
+                    <div class="corevalue-content">
+                        <span>Hotline hỗ trợ</span>
+                        <strong>1900 0000</strong>
+                    </div>
+                </div>
+                <div class="item">
+                    <span class="corevalue-icon">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </span>
+                    <div class="corevalue-content">
+                        <span>Thủ tục đổi trả</span>
+                        <strong>Dễ dàng</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end core value -->
+
+
+
+
+
+    <!-- footer section starts  -->
+
+    <footer>
+        <div class="container footer-bg">
+            <div class="col-content">
+                <div class="link-content">
+                    <h4><a>Hỗ trợ - Dịch vụ</a></h4>
+                    <ul>
+                        <li><a href="#">Mua hàng trả góp</a></li>
+                        <li><a href="#">Hướng dẫn đặt hàng và thanh toán</a></li>
+                        <li><a href="#">Tra cứu đơn hàng</a></li>
+                        <li><a href="#">Chính sách bảo hành</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Chính sách giải quyết khiếu nại</a></li>
+                        <li><a href="#">Điều khoản mua bán hàng hóa</a></li>
+                        <li><a href="#">Câu hỏi thường gặp</a></li>
+                        <li><a href="#">Phạm vi, điều khoản gói bảo hành mở rộng</a></li>
+                    </ul>
+                </div>
+                <div class="link-content">
+                    <h4><a>Thông tin liên hệ</a></h4>
+                    <ul>
+                        <li><a href="#">Bán hàng online</a></li>
+                        <li><a href="#">Chăm sóc khách hàng</a></li>
+                        <li><a href="#">Hỗ trợ kỹ thuật</a></li>
+                        <li><a href="#">Hỗ trợ bảo hành và sửa chữa</a></li>
+                        <li><a href="#">Liên hệ khối văn phòng</a></li>
+                        <li><a href="#">Hợp tác kinh doanh</a></li>
+                        <li><a href="#">Trung tâm bảo hành</a></li>
+                    </ul>
+                </div>
+                <div class="link-content">
+                    <h4><a>Hệ thống cửa hàng</a></h4>
+                    <ul>
+                        <li><a href="#">Hệ thống cửa hàng</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Tổng đài</h4>
+                    <a class="hotline" href="tel:0906536418">090 6536418</a>
+                </div>
+                <div>
+                    <h4>Thanh toán miễn phí</h4>
+                    <ul class="list-logo">
+                        <li class="d-flex">
+                            <img src="images/logo-visa.png" alt="">
+                            <img src="images/logo-master.png" alt="">
+                        </li>
+                        <li class="d-flex">
+                            <img src="images/logo-jcb.png" alt="">
+                            <img src="images/logo-samsungpay.png" alt="">
+                        </li>
+                        <li class="d-flex">
+                            <img src="images/logo-atm.png" alt="">
+                            <img src="images/logo-vnpay.png" alt="">
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Hình thức vận chuyển</h4>
+                    <ul class="list-logo">
+                        <li class="d-flex">
+                            <img src="images/nhattin.jpg" alt="">
+                            <img src="images/vnpost.jpg" alt="">
+                        </li>
+                    </ul>
+                    <div class="mg-top20">
+                        <a href="#">
+                            <img src="images/logo-bct.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-info">
+                <p>
+                    © 2020. CÔNG TY CỔ PHẦN XÂY DỰNG VÀ ĐẦU TƯ THƯƠNG MẠI UIT. MST: 0106713191. (Đăng ký lần đầu: Ngày
+                    15 tháng 12 năm 2014, Đăng ký thay đổi ngày 24/11/2022)
+                </p>
+                <p>
+                    <strong>GP số 426/GP-TTĐT do sở TTTT Hà Nội cấp ngày 22/01/2021</strong>
+                </p>
+                <p>
+                    Địa chỉ: Số 89 Đường Tam Trinh, Phường Mai Động, Quận Hoàng Mai, Thành Phố Hà Nội, Việt Nam. Điện
+                    thoại: 1900.2091. Chịu trách nhiệm nội dung:
+                    <strong>Ngô Phương Nam</strong>.
+                </p>
+            </div>
+        </div>
+        <div class="backtotop">
+            <button id="btnToTop" onclick="topFunction()" title="Quay lại dầu trang">
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- footer section ends -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+        var citis = document.getElementById("city");
+        var districts = document.getElementById("district");
+        var Parameter = {
+            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+            method: "GET",
+            responseType: "application/json",
+        };
+        var promise = axios(Parameter);
+        promise.then(function (result) {
+            renderCity(result.data);
+        });
+
+        function renderCity(data) {
+            for (const x of data) {
+                citis.options[citis.options.length] = new Option(x.Name, x.Id);
+            }
+            citis.onchange = function () {
+                // district.length = 1;
+                // if (this.value != "") {
+                //     const result = data.filter(n => n.Id === this.value);
+
+                //     for (const k of result[0].Districts) {
+                //         district.options[district.options.length] = new Option(k.Name, k.Id);
+                //     }
+                // }
+                console.log(this);
+            };
+        }
+    </script>
 </body>
+
 </html>
