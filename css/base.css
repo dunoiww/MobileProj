@@ -100,12 +100,20 @@ meta {
 }
 /* end breadcrumb  */
 
+.header-page .navbar li a.active {
+	color: var(--primary-color);
+}
+
 .text-red {
 	color: var(--price-color);
 }
 
 .text-green {
 	color: var(--primary-color);
+}
+
+.text-gray {
+	color: #aaa;
 }
 
 a, a:link, a:visited {
