@@ -11,6 +11,7 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" />
     <link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/jssor.css">
@@ -23,7 +24,8 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="owlcarousel/owl.carousel.min.js"></script>
-    <script src="js/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    <script type="module" src="js/script.js" defer></script>
 
 </head>
 <body>
@@ -73,7 +75,7 @@
 <!-- header section  -->
 
 <section class="heading">
-    <h1>account</h1>
+    <h1>tài khoản</h1>
     <p> <a href="home.html">Trang chủ</a> >> Đăng ký </p>
 </section>
 
@@ -88,22 +90,26 @@
     <form action="">
         <h3>Đăng ký</h3>
         <div class="inputBox">
+            <span class="fa-solid fa-user-tie"></span>
+            <input type="text" name="name user" placeholder="Họ và tên" id="name user" required="True">
+        </div>
+        <div class="inputBox">
             <span class="fas fa-user"></span>
-            <input type="text" name="" placeholder="Họ và tên" id="">
+            <input type="text" name="text" placeholder="Tài khoản" id="username" required="True">
         </div>
         <div class="inputBox">
             <span class="fas fa-envelope"></span>
-            <input type="email" name="" placeholder="Email" id="">
+            <input type="email" name="email" placeholder="Email" id="email user" required="True">
         </div>
         <div class="inputBox">
             <span class="fas fa-lock"></span>
-            <input type="password" name="" placeholder="Mật khẩu" id="">
+            <input type="password" name="password" placeholder="Mật khẩu" id="password" required="True">
         </div>
         <div class="inputBox">
             <span class="fas fa-lock"></span>
-            <input type="password" name="" placeholder="Nhập lại mật khẩu" id="">
+            <input type="password" name="password" placeholder="Nhập lại mật khẩu" id="repassword" required="True">
         </div>
-        <input type="submit" value="Đăng ký" class="btn">
+        <input type="submit" value="Đăng ký" class="btn" id="btnRegister">
         <a href="login.html" class="btn">Đã có tài khoản</a>
     </form>
 
@@ -205,7 +211,7 @@
         </div>
     </div>
     <div class="backtotop">
-        <button id="btnToTop" onclick="topFunction()" title="Quay lại dầu trang">
+        <button id="btnToTop" title="Quay lại dầu trang">
             <i class="fa-solid fa-arrow-up"></i>
         </button>
     </div>

@@ -1,4 +1,4 @@
-import { API_URL } from "./const.js";
+import { API_URL } from "./controllers/const.js";
 import axios from 'https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm';
 
 var userAPI = API_URL + "user/";
