@@ -1,9 +1,0 @@
-{
-    "liveServer.settings.port": 5501,
-    "[css]": {
-        "editor.defaultFormatter": "vscode.css-language-features"
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "Jota0222.multi-formatter"
-    }
-}
