@@ -51,8 +51,22 @@
                 <li><a class="nav-link" href="contact.html">Liên hệ</a></li>
                 <li><a class="nav-link" href="#">Tài khoản</a>
                     <ul class="pr-20">
-                        <li><a class="nav-link border-bottom" href="login.html">Đăng nhập</a></li>
-                        <li><a class="nav-link" href="register.html">Đăng ký</a></li>
+                        <!-- <li><a class="nav-link border-bottom" href="login.html">Đăng nhập</a></li>
+                        <li><a class="nav-link" href="register.html">Đăng ký</a></li> -->
+                        <li>
+                            <div class="user-content border-bottom">
+                                <a href="userpage.html">
+                                    <div class="d-flex align-items-center user-detail">
+                                        <i class="fa-solid fa-user"></i>
+                                        <span class="username">Huỳnh Mai Cao Nhân</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <a href="#" class="f-size-2" style="padding: 2rem; text-align: center;">Đăng xuất</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -188,69 +202,6 @@
                             <div class="control">
                                 <select name="SystemcityID" id="city" aria-placeholder="Tỉnh/Thành phố *">
                                     <option value>Tỉnh/Thành phố *</option>
-                                    <!-- <option value="1">H&#224; Nội</option>
-                                    <option value="50">TP HCM</option>
-                                    <option value="57">An Giang</option>
-                                    <option value="49">B&#224; Rịa - Vũng T&#224;u</option>
-                                    <option value="15">Bắc Giang</option>
-                                    <option value="4">Bắc Kạn</option>
-                                    <option value="62">Bạc Li&#234;u</option>
-                                    <option value="18">Bắc Ninh</option>
-                                    <option value="53">Bến Tre</option>
-                                    <option value="35">B&#236;nh Định</option>
-                                    <option value="47">B&#236;nh Dương</option>
-                                    <option value="45">B&#236;nh Phước</option>
-                                    <option value="39">B&#236;nh Thuận</option>
-                                    <option value="63">C&#224; Mau</option>
-                                    <option value="59">Cần Thơ</option>
-                                    <option value="3">Cao Bằng</option>
-                                    <option value="32">Đ&#224; Nẵng</option>
-                                    <option value="42">Đắk Lắk</option>
-                                    <option value="43">Đắk N&#244;ng</option>
-                                    <option value="7">Điện Bi&#234;n</option>
-                                    <option value="48">Đồng Nai</option>
-                                    <option value="56">Đồng Th&#225;p</option>
-                                    <option value="41">Gia Lai</option>
-                                    <option value="2">H&#224; Giang</option>
-                                    <option value="23">H&#224; Nam</option>
-                                    <option value="28">H&#224; Tĩnh</option>
-                                    <option value="19">Hải Dương</option>
-                                    <option value="20">Hải Ph&#242;ng</option>
-                                    <option value="60">Hậu Giang</option>
-                                    <option value="11">Ho&#224; B&#236;nh</option>
-                                    <option value="21">Hưng Y&#234;n</option>
-                                    <option value="37">Kh&#225;nh H&#242;a</option>
-                                    <option value="58">Ki&#234;n Giang</option>
-                                    <option value="40">Kon Tum</option>
-                                    <option value="8">Lai Ch&#226;u</option>
-                                    <option value="44">L&#226;m Đồng</option>
-                                    <option value="13">Lạng Sơn</option>
-                                    <option value="6">L&#224;o Cai</option>
-                                    <option value="51">Long An</option>
-                                    <option value="24">Nam Định</option>
-                                    <option value="27">Nghệ An</option>
-                                    <option value="25">Ninh B&#236;nh</option>
-                                    <option value="38">Ninh Thuận</option>
-                                    <option value="16">Ph&#250; Thọ</option>
-                                    <option value="36">Ph&#250; Y&#234;n</option>
-                                    <option value="29">Quảng B&#236;nh</option>
-                                    <option value="33">Quảng Nam</option>
-                                    <option value="34">Quảng Ng&#227;i</option>
-                                    <option value="14">Quảng Ninh</option>
-                                    <option value="30">Quảng Trị</option>
-                                    <option value="61">S&#243;c Trăng</option>
-                                    <option value="9">Sơn La</option>
-                                    <option value="46">T&#226;y Ninh</option>
-                                    <option value="22">Th&#225;i B&#236;nh</option>
-                                    <option value="12">Th&#225;i Nguy&#234;n</option>
-                                    <option value="26">Thanh H&#243;a</option>
-                                    <option value="31">Thừa Thi&#234;n Huế</option>
-                                    <option value="52">Tiền Giang</option>
-                                    <option value="54">Tr&#224; Vinh</option>
-                                    <option value="5">Tuy&#234;n Quang</option>
-                                    <option value="55">Vĩnh Long</option>
-                                    <option value="17">Vĩnh Ph&#250;c</option>
-                                    <option value="10">Y&#234;n B&#225;i</option>    -->
                                 </select>
                             </div>
                         </div>
@@ -451,15 +402,14 @@
                 citis.options[citis.options.length] = new Option(x.Name, x.Id);
             }
             citis.onchange = function () {
-                // district.length = 1;
-                // if (this.value != "") {
-                //     const result = data.filter(n => n.Id === this.value);
+                district.length = 1;
+                if (this.value != "") {
+                    const result = data.filter(n => n.Id === this.value);
 
-                //     for (const k of result[0].Districts) {
-                //         district.options[district.options.length] = new Option(k.Name, k.Id);
-                //     }
-                // }
-                console.log(this);
+                    for (const k of result[0].Districts) {
+                        district.options[district.options.length] = new Option(k.Name, k.Id);
+                    }
+                }
             };
         }
     </script>
