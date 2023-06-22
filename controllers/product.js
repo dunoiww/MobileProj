@@ -4,13 +4,13 @@ import axios from 'https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm';
 var productAPI = API_URL + 'product/';
 
 export function getAllProduct() {
-    axios.get(productAPI)
-    .then((data) => {
-        console.log("Get all product successful");
-        return data;
-    }).catch((err) => {
-        console.error(err);
-    })
+    return axios.get(productAPI)
+        .then((data) => {
+            console.log("Get all product successful");
+            return data;
+        }).catch((err) => {
+            console.error(err);
+        })
 }
 
 export function getProduct(id) {

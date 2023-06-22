@@ -7,6 +7,7 @@ $(document).ready(function() {
     openTab();
 
     loadCustomer();
+    loadProduct();
 
     $(document).on('click', '.admin-content #sidebar ul li a', function() {
         $('.admin-content #sidebar ul li a').removeClass('active');
@@ -110,20 +111,20 @@ $(document).ready(function() {
                     name: arrayForm[0].value,
                     price: parseInt(arrayForm[1].value),
                     quantity: parseInt(arrayForm[2].value),
-                    describe: arrayForm[3].value,
-                    screen: arrayForm[4].value,
-                    operating_system: arrayForm[5].value,
-                    rear_camera: arrayForm[6].value,
-                    front_camera: arrayForm[7].value,
-                    ram: arrayForm[8].value,
-                    rom: arrayForm[9].value,
-                    chip: arrayForm[10].value,
-                    sim: arrayForm[11].value,
-                    color: arrayForm[12].value,
+                    brand: arrayForm[3].value,
+                    describe: arrayForm[4].value,
+                    screen: arrayForm[5].value,
+                    operating_system: arrayForm[6].value,
+                    rear_camera: arrayForm[7].value,
+                    front_camera: arrayForm[8].value,
+                    ram: arrayForm[9].value,
+                    rom: arrayForm[10].value,
+                    chip: arrayForm[11].value,
+                    sim: arrayForm[12].value,
+                    pin: arrayForm[13].value,
+                    color: arrayForm[14].value,
                 }
                 
-                console.log(data)
-
                 createProduct(data).then((result) => {
                     console.log(result);
                 })
@@ -207,4 +208,26 @@ function loadCustomer() {
     })
 }
 
+function loadProduct() {
+    getAllProduct().then((res) => {
+        return res.data;
+    }).then((products) => {
+        var tbody = $('#tableProduct').find('tbody');
+        
+        let tableHtml = "";
+
+        products.forEach(products => {
+            tableHtml += "<tr id=" + products['_id'] + ">";
+            tableHtml += '<td><img src="' + products['images'][0] + '" alt="Ảnh" style="width: 50px; height: 50px;"></td>';
+            tableHtml += "<td>" + products['name'] + "</td>";
+            tableHtml += "<td>" + products['price'] + "</td>";
+            tableHtml += "<td>" + products['quantity'] + "</td>";
+            tableHtml += '<td><button class="btn btn-primary btnFixProduct" style="height:40px">Sửa</button></td>';
+            tableHtml += '<td><button class="btn btn-danger btnDeleteProduct" style="height:40px">Xoá</button></td>';
+            tableHtml += "</tr>";
+        });
+
+        tbody.html(tableHtml);
+    })
+}
 

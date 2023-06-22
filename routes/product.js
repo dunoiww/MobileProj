@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
     name: req.body.name,
     price: req.body.price,
     quantity: req.body.quantity,
+    brand: req.body.brand,
     describe: req.body.describe,
     screen: req.body.screen,
     operating_system: req.body.operating_system,
@@ -32,6 +33,7 @@ router.post('/', async (req, res) => {
     rom: req.body.rom,
     chip: req.body.chip,
     sim: req.body.sim,
+    pin: req.body.pin,
     images: req.body.images,
     color: req.body.color,
   })

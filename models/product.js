@@ -14,6 +14,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  brand: {
+    type: String,
+    required: true
+  },
   describe: {
     type: String,
     required: true
@@ -47,6 +51,10 @@ const productSchema = new mongoose.Schema({
     required: true
   },
   sim: {
+    type: String,
+    required: true
+  },
+  pin: {
     type: String,
     required: true
   },
