@@ -24,19 +24,23 @@ export function getUser(id) {
 }
 
 export function createUser(data) {
-    axios.post(userAPI, data)
+    return axios.post(userAPI, data)
     .then(() => {
         console.log("Create user successful");
+        return true;
     }).catch((err) => {
         console.error(err);
+        return false;
     })
 }
 
 export function deleteUser(id) {
-    axios.delete(userAPI + id)
-    .then((data) => {
+    return axios.delete(userAPI + id)
+    .then(() => {
         console.log("Delete user successful");
+        return true;
     }).catch((err) => {
         console.error(err);
+        return false;
     })
 }

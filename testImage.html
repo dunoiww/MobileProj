@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload ảnh và hiển thị dưới dạng base64</title>
+</head>
+<body>
+  <input type="file" id="fileInput" accept="image/*">
+  <img id="imagePreview" src="#" alt="Ảnh xem trước" width="300">
+
+  <script>
+    const fileInput = document.getElementById('fileInput'); // Đối tượng input file
+    const imagePreview = document.getElementById('imagePreview'); // Đối tượng để hiển thị ảnh xem trước
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+
+      reader.addEventListener('load', () => {
+        const base64Image = reader.result; // Chuỗi base64 của ảnh
+
+        // Hiển thị ảnh xem trước
+        imagePreview.src = base64Image;
+
+        // Lưu base64Image vào MongoDB hoặc thực hiện các xử lý khác
+        // Gửi base64Image đến server, lưu trữ, vv.
+
+        console.log(base64Image);
+      });
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>

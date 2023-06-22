@@ -1,6 +1,10 @@
 import { getAllUser, getUser, createUser, deleteUser} from "./../controllers/user.js"
 
-let currentCustomer = null;
+let currentCustomer = null; // customer
+
+
+const originUrl = window.location.origin; // origin link
+
 
 let searchForm = document.querySelector('.header-page .search-form');
 
@@ -105,6 +109,7 @@ $("form").on("submit", function() {
                         }
                         else {
                             currentCustomer = user;
+                            console.log(currentCustomer);
                         }
 
                         isLogin = true;

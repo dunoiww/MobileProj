@@ -3,7 +3,7 @@ import axios from 'https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm';
 
 var productAPI = API_URL + 'product/';
 
-function getAllProduct() {
+export function getAllProduct() {
     axios.get(productAPI)
     .then((data) => {
         console.log("Get all product successful");
@@ -13,7 +13,7 @@ function getAllProduct() {
     })
 }
 
-function getProduct(id) {
+export function getProduct(id) {
     axios.get(productAPI + id)
     .then((data) => {
         console.log("Get product successful");
@@ -23,16 +23,18 @@ function getProduct(id) {
     })
 }
 
-function createProduct(data) {
-    axios.post(productAPI, data)
+export function createProduct(data) {
+    return axios.post(productAPI, data)
     .then(() => {
         console.log("Create product successful");
+        return true;
     }).catch((err) => {
         console.error(err);
+        return false;
     })
 }
 
-function deleteProduct(id) {
+export function deleteProduct(id) {
     axios.delete(productAPI + id)
     .then((data) => {
         console.log("Delete product successful");

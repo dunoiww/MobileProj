@@ -17,21 +17,31 @@ router.get('/:id', getProduct, (req, res) => {
   res.json(res.product)
 })
 
-// // Creating one
-// router.post('/', async (req, res) => {
-//   const cart = new Cart({
-//     product_id: req.body.product_id,
-//     product_name: req.body.product_name,
-//     user_id: req.body.user_id,
-//     quantity: req.body.quantity,
-//   })
-//   try {
-//     const newCart = await cart.save()
-//     res.status(201).json(newCart)
-//   } catch (err) {
-//     res.status(400).json({ message: err.message })
-//   }
-// })
+// Creating one
+router.post('/', async (req, res) => {
+  const product = new Product({
+    name: req.body.name,
+    price: req.body.price,
+    quantity: req.body.quantity,
+    describe: req.body.describe,
+    screen: req.body.screen,
+    operating_system: req.body.operating_system,
+    rear_camera: req.body.rear_camera,
+    front_camera: req.body.front_camera,
+    ram: req.body.ram,
+    rom: req.body.rom,
+    chip: req.body.chip,
+    sim: req.body.sim,
+    images: req.body.images,
+    color: req.body.color,
+  })
+  try {
+    const newProduct = await product.save()
+    res.status(201).json(newProduct)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
 
 // // Updating One
 // router.patch('/:id', getCart, async (req, res) => {
