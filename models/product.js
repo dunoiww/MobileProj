@@ -1,5 +1,12 @@
 const mongoose = require('mongoose')
 
+// image
+const imageSchema = new mongoose.Schema({
+  name: String,
+  data: Buffer,
+  contentType: String
+});
+
 // id mongo tự tăng
 const productSchema = new mongoose.Schema({
   name: {
@@ -26,7 +33,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  rear_camera: {
+  front_camera: {
     type: String,
     required: true
   },
@@ -47,15 +54,15 @@ const productSchema = new mongoose.Schema({
     required: true
   },
   images: {
-    type: Array,
+    type: [imageSchema],
     required: true
   },
   types: {
-    type: Array,
+    type: [String],
     required: true
   },
   colors: {
-    type: Array,
+    type: [String],
     required: true
   }
 })
