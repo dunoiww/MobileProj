@@ -1,13 +1,15 @@
 import axios from 'https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm';
 
 import { getAllUser, createUser, deleteUser } from './../controllers/user.js';
-import { getAllProduct, createProduct, deleteProduct } from './../controllers/product.js';
+import { getAllProduct, createProduct, deleteProduct, getProduct } from './../controllers/product.js';
+import { getAllOrder, updateOrder } from './../controllers/order.js';
 
 $(document).ready(function() {
     openTab();
 
     loadCustomer();
     loadProduct();
+    loadOrder();
 
     $(document).on('click', '.admin-content #sidebar ul li a', function() {
         $('.admin-content #sidebar ul li a').removeClass('active');
@@ -234,3 +236,65 @@ function loadProduct() {
     })
 }
 
+function loadOrder() {
+    getAllOrder()
+        .then((res) => res.data)
+        .then((orders) => {
+            let tableHtml = "";
+
+            // Sử dụng Promise.all để chờ tất cả các yêu cầu dữ liệu hoàn thành
+            const getProductPromises = orders.map(order => getProduct(order['product_id']).then((res) => res.data));
+            return Promise.all(getProductPromises)
+                .then(products => {
+                    orders.forEach((order, index) => {
+                        const product = products[index];
+
+                        tableHtml += "<tr id=" + order['_id'] + ">";
+                        tableHtml += "<td>" + order['user_name'] + "</td>";
+                        tableHtml += "<td>" + product['name'] + "</td>";
+                        tableHtml += "<td>" + order['quantity'] + "</td>";
+                        tableHtml += "<td>" + product['quantity'] + "</td>";
+                        tableHtml += "<td>" + order['status'] + "</td>";
+                        tableHtml += '<td><button class="btn btn-primary btnAcceptOrder">Xác nhận</button></td>';
+                        tableHtml += '<td><button class="btn btn-danger btnCancelOrder">Huỷ</button></td>';
+                    });
+                    return tableHtml;
+                });
+        }).then((tableHtml) => {
+            console.log(tableHtml)
+            let tbody = $('#tableOrder').find('tbody');
+
+            tbody.html(tableHtml);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+$(document).on('click', '.btnAcceptOrder', function() {
+    const row = $(this).closest("tr");
+    const data = {
+        status: "Đang giao"
+    }
+    updateOrder(row.attr('id'), data).then((result) => {
+        if (result) {
+            alert('Đã xác nhận đơn hàng này');
+            loadOrder()
+        } else {
+        }
+    })
+})
+
+$(document).on('click', '.btnCancelOrder', function() {
+    const row = $(this).closest("tr");
+    const data = {
+        status: "Đã huỷ"
+    }
+    updateOrder(row.attr('id'), data).then((result) => {
+        if (result) {
+            alert('Đã huỷ đơn hàng này');
+            loadOrder()
+        } else {
+        }
+    })
+})

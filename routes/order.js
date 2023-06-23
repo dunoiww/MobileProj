@@ -21,7 +21,6 @@ router.get('/:id', getOrder, (req, res) => {
 router.post('/', async (req, res) => {
   const order = new Order({
     product_id: req.body.product_id,
-    product_name: req.body.product_name,
     user_id: req.body.user_id,
     user_name: req.body.user_name,
     quantity: req.body.quantity,

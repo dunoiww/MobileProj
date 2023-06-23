@@ -68,6 +68,21 @@ router.get('/sort/:type', async (req, res) => {
   }
 })
 
+router.get('/search/:text', async (req, res) => {
+  try {
+    const text = req.query.text
+
+    const product = await Product.find({ name: new RegExp(text, 'i') })
+    
+    if (product == null) {
+      return res.status(404).json({ message: err.message })
+    }
+    res.json(product)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 // Creating one
 router.post('/', async (req, res) => {
   const product = new Product({

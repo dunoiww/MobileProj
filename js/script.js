@@ -1,7 +1,7 @@
 import { conventVND } from "./const.js";
 
-import { getAllUser, getUser, createUser, deleteUser} from "./../controllers/user.js"
-import { getAllProduct, getSomeProduct, getProductBrand, getProductSortByPrice, getProduct } from "./../controllers/product.js"
+import { getAllUser, getUser, createUser, deleteUser, updateUser} from "./../controllers/user.js"
+import { getAllProduct, getSomeProduct, getProductBrand, getProductSortByPrice, getProduct, getProductFilterByName  } from "./../controllers/product.js"
 import { getAllOrder, createOrder, deleteOrder, updateOrder} from "./../controllers/order.js"
 import { getAllCart, createCart, deleteCart, updatedCart} from "./../controllers/cart.js"
 
@@ -141,6 +141,10 @@ $(document).ready(function() {
             break;
         case 'cart':
             loadProductInCart();
+            break;
+        case 'userpage':
+            loadDataCustomer();
+            loadTableOrder();
             break;
     }
 })
@@ -340,6 +344,19 @@ $(document).on('click', '.sortProduct', function() {
     })
 })
 
+$(document).on('click', '#btnSearchProduct', function() {
+    const text = $('#search-box').val();
+
+    getProductFilterByName(text).then((res) => {
+        return res.data
+    }).then((products) => {
+        loadProduct("listProductContent", products)
+    }).catch((err) => {
+        console.error(err)
+    })
+})
+
+
 // Detail product
 function loadDetailProduct(id) {
     getProduct(id).then((res) => {
@@ -499,7 +516,7 @@ function loadProductInCart() {
             if (cart['user_id'] === mainCustomer['_id']) {
                 divCart += 
                 `
-                <div class="box boxCart" id="${cart['_id']}" data-product-id="${cart['product_id']}>
+                <div class="box boxCart" id="${cart['_id']}" data-product-id="${cart['product_id']}">
                     <i class="fas fa-times btnDelCart"></i>
                     <img src="${cart['image']}" alt="">
                     <div class="content">
@@ -571,31 +588,215 @@ $("form").on("submit", function() {
 
     const listBoxCart = $(".boxCart")
 
-    if (listBoxCart.length === 0) {
-        Swal.fire({
-            title: "Thông báo",
-            text: "Vui lòng thêm sản phẩm vào giỏ hàng để thực hiện",
-            icon: "error",
-            confirmButtonText: "OK"
-        });
-    } else {
+      {
         var buttonId = $(document.activeElement).attr("id");
 
         if (buttonId === "btnConfirmOrder") {
+            if (listBoxCart.length === 0) {
+                Swal.fire({
+                    title: "Thông báo",
+                    text: "Vui lòng thêm sản phẩm vào giỏ hàng để thực hiện",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+
+                return;
+            }
+
+
             const arrayForm = $(this).serializeArray();
 
             const nameCustomer = arrayForm[0].value;
             const phone = arrayForm[1].value;
-            const address = arrayForm[4].value + arrayForm[3].value + arrayForm[2].value;
-
-            const data = {
-                user_id: JSON.parse(localStorage.getItem('loggedInUser'))['_id'],
-                user_name: nameCustomer,
-                address: address,
-                phone: phone,
-                status: "Chờ xác nhận"
-            }
+            
+            listBoxCart.each(function() {
+                const cartId = $(this).attr('id');
+                const productId = $(this).data('product-id').replace('#', '');
+                const quantity = $(this).find('input[type="number"]').val();
+                const city = document.getElementById("city");
+                const dis = document.getElementById("district");
+                const address = arrayForm[4].value + ", " + dis.options[dis.selectedIndex].text + " " + city.options[city.selectedIndex].text;
+                const data = {
+                    product_id: productId,
+                    user_id: JSON.parse(localStorage.getItem('loggedInUser'))['_id'],
+                    user_name: nameCustomer,
+                    address: address,
+                    phone: phone,
+                    status: "Chờ xác nhận",
+                    quantity: quantity
+                }
+                
+                createOrder(data).then((result) => {
+                    if (result) {
+                        deleteCart(cartId).then((result) => {
+                            if (result) {
+                                $(this).remove();
+                            }
+                        })
+                    }
+                })
+            })
         }
     }
-    
+})
+
+// userpage
+
+function loadDataCustomer() {
+    const mainCustomer = JSON.parse(localStorage.getItem('loggedInUser'));
+    $('#nameCustomer').val(mainCustomer['name']);
+    $('#emailCustomer').val(mainCustomer['email']);
+}
+
+$("form").on("submit", function() {
+    event.preventDefault();
+
+    var buttonId = $(document.activeElement).attr("id");
+
+    if (buttonId === "btnUpdateCustomer") {
+        let data = {
+            name: $('#nameCustomer').val(),
+            email: $('#emailCustomer').val(),
+        }
+
+        const newPassword = $('#Password').val();
+        const SecurityStamp = $('#SecurityStamp').val();
+
+        if (newPassword != "" && SecurityStamp != "") {
+            if (SecurityStamp !== newPassword) {
+                Swal.fire({
+                    title: "Lỗi",
+                    text: "Mật khẩu xác nhận không đúng",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            } else {
+                data.password = newPassword
+                
+            }
+        }
+        const mainCustomer = JSON.parse(localStorage.getItem('loggedInUser'));
+
+        updateUser(mainCustomer['_id'], data).then((result) => {
+            if (result) {
+                Swal.fire({
+                    title: "Thông báo",
+                    text: "Cập nhật thông tin thành công",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+            } else {
+                Swal.fire({
+                    title: "Lỗi",
+                    text: "Cập nhật thông tin thất bại",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            }
+        }).catch((error) => {
+            console.error(error);
+        })
+    }
+})
+
+
+function loadTableOrder() {
+    getAllOrder()
+        .then((res) => res.data)
+        .then((orders) => {
+            let tableHtml = "";
+
+            // Sử dụng Promise.all để chờ tất cả các yêu cầu dữ liệu hoàn thành
+            const getProductPromises = orders.map(order => getProduct(order['product_id']).then((res) => res.data));
+            return Promise.all(getProductPromises)
+                .then(products => {
+                    orders.forEach((order, index) => {
+                        const product = products[index];
+
+                        tableHtml += "<tr id=" + order['_id'] + ">";
+                        tableHtml += "<td>" + product['name'] + "</td>";
+                        tableHtml += "<td>" + order['status'] + "</td>";
+                        var myStyle = "style= 'display:block;'"
+                        
+                        if (order['status'] !== 'Chờ xác nhận') {
+                            myStyle = "style= 'display:none;'"
+                        }
+                        
+                        tableHtml += '<td><button class="btn btn-danger btnDeleteOrder" '+myStyle+'>Huỷ</button></td>';
+                        
+                        var myStyle = "style= 'display:none;'"
+                        
+                        if (order['status'] === 'Đang giao') {
+                            myStyle = "style= 'display:block;'"
+                        }
+
+                        tableHtml += '<td><button class="btn btn-primary btnReceiveOrder"'+myStyle+'>Nhận</button></td>';
+                        tableHtml += "</tr>";
+                    });
+                    return tableHtml;
+                });
+        }).then((tableHtml) => {
+            let tbody = $('#tableOrderOfCustomer').find('tbody');
+
+            tbody.html(tableHtml);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
+$(document).on('click', '.btnDeleteOrder', function() {
+    Swal.fire({
+        title: 'Thông báo',
+        text: 'Xác nhận xoá khỏi đơn hàng',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Không'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            const row = $(this).closest("tr");
+            deleteOrder(row.attr('id')).then((result) => {
+                if (result) {
+                    Swal.fire({
+                        title: "Thông báo",
+                        text: "Xoá thành công",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+                    row.remove();   
+                } else {
+                    Swal.fire({
+                        title: "Lỗi",
+                        text: "Xoá không thành công",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            })
+
+        }
+    })
+})
+
+$(document).on('click', '.btnReceiveOrder', function() {
+    const row = $(this).closest("tr");
+    const data = {
+        status: "Đã nhận"
+    }
+
+    updateOrder(row.attr('id'), data).then((result) => {
+        Swal.fire({
+            title: "Thông báo",
+            text: "Đã nhận đơn hàng",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
+
+        if (result) {
+            loadTableOrder()
+        } else {
+
+        }
+    })
 })

@@ -11,6 +11,7 @@
     
     <!-- custom css file link  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" />
     <link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/base.css">
@@ -22,6 +23,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
     <script type="module" src="js/script.js" defer></script>
 
 </head>
@@ -115,47 +117,14 @@
                                 <div class="form-controls">
                                     <label for="">Họ tên: </label>
                                     <div class="controls">
-                                        <input type="text" value="" name="Title" id="Title" placeholder="Họ tên *" data-required="1">
+                                        <input type="text" value="" name="Title" id="nameCustomer" placeholder="Họ tên *" data-required="1" required="true">
                                     </div>
                                 </div>
-                                <div class="form-controls">
-                                    <label for="">Điện thoại: </label>
-                                    <div class="controls">
-                                        <input type="tel" value="" name="PhoneNumber" id="PhoneNumber" placeholder="Số điện thoại *" data-required="1">
-                                    </div>
-                                </div>
+                               
                                 <div class="form-controls">
                                     <label for="">Email: </label>
                                     <div class="controls">
-                                        <input type="text" value="" name="Email" id="Email" placeholder="Email *" data-required="1">
-                                    </div>
-                                </div>
-                                <div class="form-controls">
-                                    <label for="">Địa chỉ: </label>
-                                    <div class="controls">
-                                        <input type="text" value="" name="Address" id="Address" placeholder="Địa chỉ *" data-required="1">
-                                    </div>
-                                </div>
-                                <div class="form-controls">
-                                    <label for="">Tỉnh/Thành phố: </label>
-                                    <div class="controls">
-                                        <select name="SystemCityID" id="SystemCityID" aria-placeholder="Tỉnh/Thành phố *" data-required="1">
-                                            <option value="">Chọn Tỉnh/Thành phố</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-controls">
-                                    <label for="">Quận huyện: </label>
-                                    <div class="controls">
-                                        <select name="SystemDistrictID" id="SystemDistrictID" aria-placeholder="Quận/Huyện *" data-required="1">
-                                            <option value="">Chọn Quận/Huyện</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-controls">
-                                    <label for="">Ngày tháng năm sinh: </label>
-                                    <div class="controls">
-                                        <input type="text" value="" name="UserBirthday" id="UserBirthday" placeholder="Ngày tháng năm sinh" data-required="1">
+                                        <input type="text" value="" name="Email" id="emailCustomer" placeholder="Email *" data-required="1" required="true">
                                     </div>
                                 </div>
                                 <div class="form-controls">
@@ -177,7 +146,7 @@
                                 </div>
                                 <div class="form-controls">
                                     <div class="controls submit-controls">
-                                        <button type="submit">XÁC NHẬN</button>
+                                        <button id="btnUpdateCustomer" type="submit">XÁC NHẬN</button>
                                     </div>
                                 </div>
                             </form>
@@ -190,8 +159,8 @@
                     <h3>Đơn hàng của bạn</h3>
                     <div class="box-bg-white">
                         <div style="padding: 25px;">
-                            <table class="table table-border table-lgpading">
-                                <tbody>
+                            <table class="table table-border table-lgpading" id="tableOrderOfCustomer">
+                                <thead>
                                     <tr>
                                         <th>Tên sản phẩm</th>
                                         <th>Trạng thái</th>
@@ -202,6 +171,9 @@
                                             <a style="color: yellow" href="javascript:;"><i class="fa-solid fa-circle-check"></i></a>
                                         </th>
                                     </tr>
+                                </thead>
+                                <tbody>
+
                                 </tbody>
                             </table>
                         </div>
@@ -306,36 +278,6 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script>
-        var citis = document.getElementById("SystemCityID");
-        var districts = document.getElementById("SystemDistrictID");
-        var Parameter = {
-            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-            method: "GET",
-            responseType: "application/json",
-        };
-        var promise = axios(Parameter);
-        promise.then(function (result) {
-            renderCity(result.data);
-        });
-
-        function renderCity(data) {
-            for (const x of data) {
-                citis.options[citis.options.length] = new Option(x.Name, x.Id);
-            }
-            citis.onchange = function () {
-                SystemDistrictID.length = 1;
-                if (this.value != "") {
-                    const result = data.filter(n => n.Id === this.value);
-
-                    for (const k of result[0].Districts) {
-                        SystemDistrictID.options[SystemDistrictID.options.length] = new Option(k.Name, k.Id);
-                    }
-                }
-            };
-        }
-    </script>
-
 </body>
 
 </html>

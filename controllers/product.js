@@ -53,6 +53,16 @@ export function getProductSortByPrice(sort) {
         })
 }
 
+export function getProductFilterByName(text) {
+    return axios.get(productAPI + 'search/' + text)
+        .then((data) => {
+            console.log("Get product name as " + text + " successful");
+            return data;
+        }).catch((err) => {
+            console.error(err);
+        })
+}
+
 export function createProduct(data) {
     return axios.post(productAPI, data)
         .then(() => {
