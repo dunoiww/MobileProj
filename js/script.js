@@ -1,12 +1,11 @@
-import { currentCustomer, setCustomer, conventVND } from "./const.js";
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import { conventVND } from "./const.js";
 
 import { getAllUser, getUser, createUser, deleteUser} from "./../controllers/user.js"
 import { getAllProduct, getSomeProduct, getProductBrand, getProductSortByPrice, getProduct } from "./../controllers/product.js"
+import { getAllOrder, createOrder, deleteOrder, updateOrder} from "./../controllers/order.js"
+import { getAllCart, createCart, deleteCart, updatedCart} from "./../controllers/cart.js"
 
-let mainCustomer = currentCustomer; // customer
-console.log(mainCustomer);
+// localStorage.removeItem("loggedInUser");
 
 let searchForm = document.querySelector('.search-form');
 
@@ -56,6 +55,29 @@ function getCurrentURL() {
     return currentURL.split('/').pop().split('.')[0];
 }
 
+function loadExtensionAccount() {
+    const listLi = $("#extensionAccount li")
+    $("#aCart").css('display', 'none');
+
+    listLi.each(function(index, element) {
+        $(element).css('display', 'none');
+      });
+
+      const mainCustomer = JSON.parse(localStorage.getItem('loggedInUser'));
+  
+      console.log(mainCustomer);  
+
+      if (mainCustomer === null) {
+        $('#liLogin').css('display', 'block');
+        $('#liRegister').css('display', 'block');
+    } else {
+        $('#liUser').css('display', 'block');
+        $('#liSignOut').css('display', 'block');
+        $("#aCart").css('display', 'inline');
+        $("#nameCustomer").text(mainCustomer['name']);
+    }
+}
+
 function loadProduct(idDiv, products) {
     let divContent = $(`#${idDiv}`);
     
@@ -102,9 +124,10 @@ function getIdProduct() {
 // load
 $(document).ready(function() {
     let mainHTML = getCurrentURL();
-    
     console.log(mainHTML);
     
+    loadExtensionAccount()
+
     switch(mainHTML) {
         case 'home':
             // loadNewProductInHome();
@@ -115,9 +138,18 @@ $(document).ready(function() {
             break;
         case 'detailProduct':
             loadDetailProduct(getIdProduct());
-            // console.log(getIdProduct());
+            break;
+        case 'cart':
+            loadProductInCart();
             break;
     }
+})
+
+// navigation
+$(document).on('click', '#liSignOut', function()  {
+    localStorage.removeItem("loggedInUser");
+    $("#aHome").click()
+    loadExtensionAccount();
 })
 
 // login
@@ -144,9 +176,12 @@ $("form").on("submit", function() {
                             console.log('admin');
                         }
                         else {
-                            mainCustomer = user;
-                            console.log(mainCustomer);
-                            setCustomer(mainCustomer);
+                            localStorage.setItem("loggedInUser", JSON.stringify(user));
+                            loadExtensionAccount();
+                            if ($("#aHome").click()) {
+                                console.log('login');
+                            }
+
                         }
 
                         isLogin = true;
@@ -252,7 +287,16 @@ $("form").on("submit", function(event) {
                 password: currentPassword
             }
 
-            createUser(data);
+            createUser(data).then((result) => {
+                if (result) {
+                    Swal.fire({
+                        title: "Thông báo",
+                        text: "Đăng kí thành công",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+                }
+            });
         }).catch((err) => {
             console.error(err);
         })
@@ -261,52 +305,6 @@ $("form").on("submit", function(event) {
 
 
 // Home
-function loadNewProductInHome() {
-    getSomeProduct(10).then((res) => {
-        return res.data;
-    }).then((products) => {
-        let divNewProductContent = $('#newProductContent');
-        
-        products.forEach(product => {
-            let priceVND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product['price']);
-            
-            let divProduct = `
-            <div class="item">
-                            <a href="#">
-                                <img src="images/pro-1.png" alt="Điện thoại nổi bật">
-                            </a>
-                            <a href="#" class="item-des text-decoration-none">
-                                <div class="item-des-content">
-                                    <h4>iPhone 13(128gb) chính hãng VN/A</h4>
-                                </div>
-                                <div class="item-des-price">
-                                    <span>19.000.000 đ</span>
-                                </div>
-                            </a>
-                        </div>
-            `
-
-            divNewProductContent.append(divProduct)
-
-            // divHTML += '<div class="item">'
-            // divHTML += '<a href="#">'
-            // divHTML += '<img src="images/pro-1.png" alt="Điện thoại nổi bật">'
-            // divHTML += '</a>'
-            // divHTML += '<a href="#" class="item-des text-decoration-none">'
-            // divHTML += '<div class="item-des-content">'
-            // divHTML += '<h4>' + product['name'] + '</h4>'
-            // divHTML += '</div>'
-            // divHTML += '<div class="item-des-price">'
-            // divHTML += '<span>' + priceVND + '</span>'
-            // divHTML += '</div>'
-            // divHTML += '</a>'
-            // divHTML += '</div>'
-        });
-
-        
-    })
-}
-
 function loadSpecialProductInHome() {
     getSomeProduct(20).then((res) => {
         return res.data;
@@ -355,51 +353,260 @@ $(document).on('click', '.sortProduct', function() {
 
 // Detail product
 function loadDetailProduct(id) {
-    // getProduct(id).then((res) => {
-    //     return res.data
-    // }).then((product) => {
-    //     $("#nameProduct").text(product['name']);
+    getProduct(id).then((res) => {
+        return res.data
+    }).then((product) => {
+        $("#nameProduct").text(product['name']);
+        $("#imageProduct").attr("src", product['images'][0]);
+        $('#priceProduct').text(conventVND(product['price']));
+        $('#productDisPrice').text(conventVND(product['price'] - 1000000));
+        $('#specificationsProduct').html(
+            `
+            <ol>
+                                    <li>
+                                        <strong>Màn hình:</strong>
+                                        <span>${product['screen']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Hệ điều hành:</strong>
+                                        <span>${product['operating_system']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Camera trước:</strong>
+                                        <span>${product['front_camera']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Camera sau:</strong>
+                                        <span>${product['rear_camera']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Ram:</strong>
+                                        <span>${product['ram']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Bộ nhớ trong(ROM):</strong>
+                                        <span>${product['rom']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Chip:</strong>
+                                        <span>${product['chip']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Sim:</strong>
+                                        <span>${product['sim']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Dung lượng pin:</strong>
+                                        <span>${product['pin']}</span>
+                                    </li>
+                                </ol>
+                                <ol>
+                                    <li>
+                                        <strong>Màu sắc:</strong>
+                                        <span>${product['color']}</span>
+                                    </li>
+                                </ol>
+            `
+        )
 
-    //     // images
-    //     let divImageHTML="";
-        
-        
-
-    //     // $("#slideImages").html(divImageHTML);
-    // }).catch((err) => {
-    //     console.error(err);
-    // })
+        $('#describeProduct').text(product['describe'])
+    }).catch((err) => {
+        console.error(err);
+    })
 }
 
+$(document).on('click', '#btnAddCart', function () {
+    const mainCustomer = JSON.parse(localStorage.getItem('loggedInUser'));
 
-//gửi email khi quên mật khẩu
-const nodemailer = require("nodemailer");
+    if (mainCustomer === null) {
+        Swal.fire({
+            title: "Lỗi",
+            text: "Bạn chưa đăng nhập",
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+    }
+    else {
+        getAllCart().then((res) => {
+            return res.data;
+        }).then((carts) => {  
+            const currentProductId = getIdProduct();
+            const currentCustomerId = mainCustomer['_id']
 
-const email = document.querySelector("#email_forgetpass");
-console.log(email);
+            let isAddCart = true;
 
-// Tạo transporter (địa chỉ email và mật khẩu của tài khoản Gmail gửi email)
-let transporter = nodemailer.createTransport({
-  service: "Gmail",
-  auth: {
-    user: "helpercustomerasp@gmail.com",
-    pass: "@N123456",
-  },
-});
+            carts.forEach(cart => {
+                if (cart['product_id'] === currentProductId && cart['user_id'] === currentCustomerId) {
+                    isAddCart = false;
+                    return;
+                } 
+            });
 
-// Tạo nội dung email (HTML)
-let mailOptions = {
-  from: "helpercustomerasp@gmail.com",
-  to: "recipient-email@example.com",
-  subject: "Mã xác nhận",
-  html: "<p>Mã xác nhận của bạn là: 123456</p>",
-};
+            if (isAddCart) {
+                getProduct(currentProductId).then((res) => {
+                    return res.data;   
+                }).then((product) => {
+                    const data = {
+                        product_id: currentProductId,
+                        product_name: product['name'],
+                        user_id: currentCustomerId,
+                        image: product['images'][0],
+                        price: product['price']
+                    }
+                    
+                    createCart(data).then((result) => {
+                        if (result) {
+                            Swal.fire({
+                                title: "Thông báo",
+                                text: "Thêm vào giỏ hàng thành công",
+                                icon: "success",
+                                confirmButtonText: "OK"
+                            });
+                        }
+                    })
+                }).catch((err) => {
+                    console.error(err);
+                })
+            } else {
+                Swal.fire({
+                    title: "Thông báo",
+                    text: "Sản phẩm đã có trong giỏ hàng",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            }
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
+})
 
-// Gửi email
-transporter.sendMail(mailOptions, function (error, info) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log("Email sent: " + info.response);
-  }
-});
+// cart
+function loadProductInCart() {
+    const mainCustomer = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    getAllCart().then((res) => {
+        return res.data;
+    }).then((carts) => {
+        let divCart=""
+
+        carts.forEach(cart => {
+            if (cart['user_id'] === mainCustomer['_id']) {
+                divCart += 
+                `
+                <div class="box boxCart" id="${cart['_id']}" data-product-id="${cart['product_id']}>
+                    <i class="fas fa-times btnDelCart"></i>
+                    <img src="${cart['image']}" alt="">
+                    <div class="content">
+                        <h3>${cart['product_name']}</h3>
+                        <form action="">
+                            <span>Số lượng :</span>
+                            <input type="number" name="" value="${cart['quantity']}" id="">
+                        </form>
+                        <div class="price">
+                            <strong>${conventVND(cart['price'])}</strong>
+                        </div>
+                    </div>
+                </div>
+                `
+            }
+        });
+
+        $("#myCartContext").html(divCart)
+
+    }).catch((err) => {
+        console.error(err);
+    })
+}
+
+$(document).on('input', '.boxCart input[type="number"]', function() {
+    const cartId = $(this).closest(".boxCart").attr("id");
+    
+    if ($(this).val() === "") {
+        $(this).val(1)
+    }
+
+    const data = {
+        quantity: $(this).val()
+    }
+
+    updatedCart(cartId, data)
+})
+
+$(document).on('click', '.boxCart .btnDelCart', function() {
+    const currentBoxCart = $(this).closest(".boxCart")
+    Swal.fire({
+        title: 'Thông báo',
+        text: 'Xác nhận xoá khỏi giỏ hàng',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Không'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            const cartId = currentBoxCart.attr("id");
+            deleteCart(cartId).then((result) => {
+                if (result) {
+                    currentBoxCart.remove();
+                } else {
+                    Swal.fire({
+                        title: "Lỗi",
+                        text: "Xoá không thành công",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            })
+        }
+    })
+})
+
+$("form").on("submit", function() {
+    event.preventDefault();
+
+    const listBoxCart = $(".boxCart")
+
+    if (listBoxCart.length === 0) {
+        Swal.fire({
+            title: "Thông báo",
+            text: "Vui lòng thêm sản phẩm vào giỏ hàng để thực hiện",
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+    } else {
+        var buttonId = $(document.activeElement).attr("id");
+
+        if (buttonId === "btnConfirmOrder") {
+            const arrayForm = $(this).serializeArray();
+
+            const nameCustomer = arrayForm[0].value;
+            const phone = arrayForm[1].value;
+            const address = arrayForm[4].value + arrayForm[3].value + arrayForm[2].value;
+
+            const data = {
+                user_id: JSON.parse(localStorage.getItem('loggedInUser'))['_id'],
+                user_name: nameCustomer,
+                address: address,
+                phone: phone,
+                status: "Chờ xác nhận"
+            }
+        }
+    }
+    
+})

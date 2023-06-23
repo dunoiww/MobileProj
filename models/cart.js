@@ -10,14 +10,23 @@ const cartSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String,
+    required: true
+  },
   user_id: {
     type: String,
     required: true
   },
   quantity: {
     type: Number,
-    required: true
-  }
+    required: true,
+     default: 1
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
 })
 
 module.exports = mongoose.model('Cart', cartSchema)

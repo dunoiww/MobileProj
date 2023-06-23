@@ -12,6 +12,7 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" />
     <link rel="stylesheet" href="owlcarousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="owlcarousel/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="css/jssor.css">
@@ -24,6 +25,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
     <script type="module" src="js/script.js" defer></script>
 
 </head>
@@ -40,7 +42,7 @@
 
         <nav class="navbar">
             <ul>
-                <li><a class="nav-link" href="home.html">Trang chủ</a></li>
+                <li><a id="aHome" class="nav-link" href="home.html">Trang chủ</a></li>
                 <li><a class="nav-link" href="products.html">Sản phẩm</a></li>
                 <li><a class="nav-link" href="#">Thông tin</a>
                     <ul class="pr-20">
@@ -50,24 +52,26 @@
                 </li>
                 <li><a class="nav-link" href="contact.html">Liên hệ</a></li>
                 <li><a class="nav-link" href="#">Tài khoản</a>
-                    <ul class="pr-20">
-                        <!-- <li><a class="nav-link border-bottom" href="login.html">Đăng nhập</a></li>
-                        <li><a class="nav-link" href="register.html">Đăng ký</a></li> -->
-                        <li>
+                    <ul class="pr-20" id="extensionAccount">
+                        <li id="liLogin"><a class="nav-link border-bottom" href="login.html">Đăng nhập</a></li>
+                        <li id="liRegister"><a class="nav-link" href="register.html">Đăng ký</a></li>
+                        <li id="liUser">
                             <div class="user-content border-bottom">
                                 <a href="userpage.html">
                                     <div class="d-flex align-items-center user-detail">
                                         <i class="fa-solid fa-user"></i>
-                                        <span class="username">Huỳnh Mai Cao Nhân</span>
+                                        <span class="username" id="nameCustomer">Huỳnh Mai Cao Nhân</span>
                                     </div>
                                 </a>
                             </div>
                         </li>
                         
-                        <li>
-                            <a href="#" class="f-size-2" style="padding: 2rem; text-align: center;">Đăng xuất</a>
+                        <li id="liSignOut">
+                            <a href="#" class="f-size-2" style="padding: 2rem; text-align: center;" id="aSignout">Đăng xuất</a>
                         </li>
                     </ul>
+                    
+    
                 </li>
             </ul>
         </nav>
@@ -75,7 +79,7 @@
         <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
             <!-- <div id="search-btn" class="fas fa-search icon-hover"></div> -->
-            <a href="cart.html" class="fas fa-shopping-cart"></a>
+            <a id="aCart" href="cart.html" class="fas fa-shopping-cart"></a>
         </div>
 
         <!-- <form action="" class="search-form">
@@ -120,12 +124,12 @@
                     </h1>
                 </div>
                 <div class="product-details-container">
-                    <img src="images/pro-detail-1.png" />
-                    <!-- <div class="product-image">
-                        <img src="images/pro-detail-1.png"/> -->
+                    <img id="imageProduct" src="images/pro-detail-1.png"/>
 
-                            <!-- Loading Screen -->
-                        <!-- <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:400px;height:470px;overflow:hidden;visibility:hidden;">
+                    <!-- <div class="product-image">
+
+                            Loading Screen
+                        <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:400px;height:470px;overflow:hidden;visibility:hidden;">
                             <div data-u="loading" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-position:50% 50%;background-repeat:no-repeat;background-image:url('img/double-tail-spin-x.svg');background-color:rgba(0, 0, 0, 0.7);background-size:40px 40px;"></div>
                             <div id="slideImages" data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:400px;height:470px;overflow:hidden;">
                                 <div>
@@ -176,11 +180,11 @@
                                     <path class="a" d="M11424,7719.7L5746,2041.9c-81.3-81.2-174.8-121.9-280.3-121.9c-105.6,0-199,40.8-280.3,121.9 l-609.1,609.2c-81.3,81.2-121.8,174.5-121.8,280.3c0,105.8,40.5,199,121.8,280.3l4788.4,4788.4l-4788.4,4788.5 c-81.3,81.2-121.8,174.7-121.8,280.1c0,105.7,40.5,199.2,121.8,280.4l609.2,609c81.2,81.3,174.7,121.8,280.3,121.8 c105.5,0,199-40.6,280.3-121.8l5677.7-5677.8c81.2-81.2,121.8-174.7,121.8-280.3C11545.5,7894.5,11505.2,7801.1,11424,7719.7z"></path>
                                 </svg>
                             </div>
-                        </div> -->
-                    <!-- </div> -->
+                        </div>
+                    </div> -->
                     <div class="product-center" style="position: relative;">
                         <p class="price current-product-price">
-                            <strong>16.900.000 ₫</strong>
+                            <strong id="priceProduct">16.900.000 ₫</strong>
                             <i> | Giá đã bao gồm 10% VAT</i>
                         </p>
 
@@ -218,12 +222,12 @@
                         <div class="renew" style="border:1px solid #ddd; border-radius:5px; margin:5px 0; padding:8px; background:#fff; text-align:center;">
                             <div>
                                 Trợ giá lên tới 
-                                <strong class="renewPrice">1,000,000 ₫ </strong>
+                                <strong class="renewPrice">1.000.000 ₫ </strong>
                                 khi thu cũ đổi mới.
                             </div>
                             <div>
                                 Giá chỉ còn 
-                                <strong class="renewValue text-red">15,390,000 ₫</strong>
+                                <strong id="productDisPrice" class="renewValue text-red">15,390,000 ₫</strong>
                             </div>
                         </div>
 
@@ -253,7 +257,7 @@
                             </ul>
                         </div> -->
 
-                        <div class="product-action">
+                        <div class="product-action" id="btnAddCart">
                             <!-- <a href="#" title="Mua ngay" class="btn-red btnQuickOrder btnbuy">
                                 <strong>MUA NGAY</strong>
                                 <span>  Giao tận nhà (COD),
@@ -265,7 +269,7 @@
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <!-- <strong>Thêm vào giỏ hàng</strong> -->
                                 <br>
-                                <span>Thêm giỏ hàng</span>
+                                <span >Thêm giỏ hàng</span>
                             </a>
                         </div>
 
@@ -274,7 +278,7 @@
                                 <i class="fa-solid fa-gear"></i>
                                 <h3>Thông số kỹ thuật</h3>
                             </div>
-                            <div class="specs-special">
+                            <div id="specificationsProduct" class="specs-special" >
                                 <ol>
                                     <li>
                                         <strong>Màn hình:</strong>
@@ -430,7 +434,7 @@
                         <span style="font-size: 18pt; line-height: 24px;">Mô tả sản phẩm</span>
                     </p>
                     <p>
-                        <span>
+                        <span id="describeProduct">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet pharetra enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse fermentum accumsan pretium. Quisque sagittis ipsum id velit dictum condimentum. Pellentesque blandit lorem neque, at mollis neque molestie ut. Nam et eleifend turpis. Fusce laoreet nulla nec risus placerat, id congue metus condimentum. Quisque eget enim tempus lectus sodales condimentum et vel libero. Pellentesque nec massa nec purus scelerisque mollis eu sed magna.
 
 Vestibulum vitae auctor nisi. Quisque varius porttitor dui, non faucibus ligula dapibus sit amet. Donec sed viverra ipsum. In a convallis libero. Donec condimentum condimentum ante id gravida. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas id tortor eget sem tristique maximus. Aliquam ut auctor odio, vel vestibulum sem. Donec vitae felis purus. Sed ac facilisis velit. Nulla cursus pharetra nisl, nec dignissim dolor tincidunt ut. Nunc ut rutrum metus. Proin vel varius ante.
