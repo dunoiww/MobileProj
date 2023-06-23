@@ -118,19 +118,19 @@
                                 <div class="form-controls">
                                     <label for="">Họ tên: </label>
                                     <div class="controls">
-                                        <input type="text" value="" name="Title" id="Title" placeholder="Họ tên *">
+                                        <input type="text" value="" name="Title" id="Title" placeholder="Họ tên *" data-required="1">
                                     </div>
                                 </div>
                                 <div class="form-controls">
                                     <label for="">Điện thoại: </label>
                                     <div class="controls">
-                                        <input type="tel" value="" name="PhoneNumber" id="PhoneNumber" placeholder="Số điện thoại *">
+                                        <input type="tel" value="" name="PhoneNumber" id="PhoneNumber" placeholder="Số điện thoại *" data-required="1">
                                     </div>
                                 </div>
                                 <div class="form-controls">
                                     <label for="">Email: </label>
                                     <div class="controls">
-                                        <input type="text" value="" name="Email" id="Email" placeholder="Email *">
+                                        <input type="text" value="" name="Email" id="Email" placeholder="Email *" data-required="1">
                                     </div>
                                 </div>
                                 <div class="form-controls">
@@ -142,7 +142,7 @@
                                 <div class="form-controls">
                                     <label for="">Tỉnh/Thành phố: </label>
                                     <div class="controls">
-                                        <select name="SystemCityID" id="SystemCityID" aria-placeholder="Tỉnh/Thành phố *">
+                                        <select name="SystemCityID" id="SystemCityID" aria-placeholder="Tỉnh/Thành phố *" data-required="1">
                                             <option value="">Chọn Tỉnh/Thành phố</option>
                                         </select>
                                     </div>
@@ -150,7 +150,7 @@
                                 <div class="form-controls">
                                     <label for="">Quận huyện: </label>
                                     <div class="controls">
-                                        <select name="SystemDistrictID" id="SystemDistrictID" aria-placeholder="Quận/Huyện *">
+                                        <select name="SystemDistrictID" id="SystemDistrictID" aria-placeholder="Quận/Huyện *" data-required="1">
                                             <option value="">Chọn Quận/Huyện</option>
                                         </select>
                                     </div>
@@ -158,7 +158,7 @@
                                 <div class="form-controls">
                                     <label for="">Ngày tháng năm sinh: </label>
                                     <div class="controls">
-                                        <input type="text" value="" name="UserBirthday" id="UserBirthday" placeholder="Ngày tháng năm sinh">
+                                        <input type="text" value="" name="UserBirthday" id="UserBirthday" placeholder="Ngày tháng năm sinh" data-required="1">
                                     </div>
                                 </div>
                                 <div class="form-controls">
@@ -184,6 +184,24 @@
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-sm">
+                    <h3>Đơn hàng của bạn</h3>
+                    <div class="box-bg-white">
+                        <div style="padding: 25px;">
+                            <table class="table table-border table-lgpading">
+                                <tbody>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

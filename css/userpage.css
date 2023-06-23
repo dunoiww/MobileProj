@@ -107,3 +107,24 @@
     outline: none;
     border: none;
 }
+
+.table-lgpading,
+.table-lgpading th,
+.table-lgpading td {
+    padding: 8px 10px;
+}
+
+.table-border,
+.table-border th,
+.table-border td {
+    border: 1px solid #dedede;
+    padding: 5px 8px;
+    font-size: 13px;
+    color: #333;
+}
+
+.table-border th {
+    color: #fff;
+    background: var(--primary-color);
+    text-align: center;
+}
