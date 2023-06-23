@@ -34,9 +34,9 @@
 
     <nav class="navbar">
         <ul>
-            <li><a class="nav-link" href="home.html">Trang chủ</a></li>
+            <li><a id="aHome" class="nav-link" href="home.html">Trang chủ</a></li>
             <li><a class="nav-link" href="products.html">Sản phẩm</a></li>
-            <li><a class="nav-link active" href="#">Thông tin</a>
+            <li><a class="nav-link" href="#">Thông tin</a>
                 <ul class="pr-20">
                     <li><a class="nav-link border-bottom" href="about.html">Về chúng tôi</a></li>
                     <li><a class="nav-link" href="blogs.html">Blogs</a></li>
@@ -44,25 +44,26 @@
             </li>
             <li><a class="nav-link" href="contact.html">Liên hệ</a></li>
             <li><a class="nav-link" href="#">Tài khoản</a>
-                <ul class="pr-20">
-                    <!-- <li><a class="nav-link border-bottom" href="login.html">Đăng nhập</a></li>
-                    <li><a class="nav-link" href="register.html">Đăng ký</a></li> -->
-
-                    <li>
+                <ul class="pr-20" id="extensionAccount">
+                    <li id="liLogin"><a class="nav-link border-bottom" href="login.html">Đăng nhập</a></li>
+                    <li id="liRegister"><a class="nav-link" href="register.html">Đăng ký</a></li>
+                    <li id="liUser">
                         <div class="user-content border-bottom">
                             <a href="userpage.html">
                                 <div class="d-flex align-items-center user-detail">
                                     <i class="fa-solid fa-user"></i>
-                                    <span class="username">Huỳnh Mai Cao Nhân</span>
+                                    <span class="username" id="nameCustomer">Huỳnh Mai Cao Nhân</span>
                                 </div>
                             </a>
                         </div>
                     </li>
                     
-                    <li>
-                        <a href="#" class="f-size-2" style="padding: 2rem; text-align: center;">Đăng xuất</a>
+                    <li id="liSignOut">
+                        <a href="#" class="f-size-2" style="padding: 2rem; text-align: center;" id="aSignout">Đăng xuất</a>
                     </li>
                 </ul>
+                
+
             </li>
         </ul>
     </nav>

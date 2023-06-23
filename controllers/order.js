@@ -35,7 +35,7 @@ export function createOrder(data) {
 }
 
 export function deleteOrder(id) {
-    axios.delete(orderAPI + id)
+    return axios.delete(orderAPI + id)
     .then((data) => {
         console.log("Delete order successful");
         return true;
