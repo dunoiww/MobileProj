@@ -13,7 +13,7 @@
 .product-filters strong.label {
     display: inline-block;
     color: var(--primary-color);
-    padding: 15px 20px;
+    padding: 15px 8px;
 }
 
 .product-filters .facet {
@@ -72,4 +72,46 @@
 .product-filters .facet:hover label i,
 .product-filters .facet:hover label span {
     color: #fd475a
+}
+
+.search-form {
+    position: absolute;
+    top: 99%;
+    left: 0;
+    right: 0;
+    /* border-top: 0.2rem solid var(--gray-color); */
+    background: var(--white-color);
+    height: 6rem;
+    z-index: 888;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 1.8rem 2rem;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+
+.search-form.active {
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+.search-form input {
+    width: 100%;
+    height: 100%;
+    padding-right: 1rem;
+    font-size: 1.7rem;
+    color: #666;
+    text-transform: none;
+}
+
+.search-form label {
+    font-size: 2.5rem;
+    color: var(--gray-color);
+    cursor: pointer;
 }
