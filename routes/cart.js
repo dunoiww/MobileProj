@@ -22,8 +22,9 @@ router.post('/', async (req, res) => {
   const cart = new Cart({
     product_id: req.body.product_id,
     product_name: req.body.product_name,
+    image: req.body.image,
     user_id: req.body.user_id,
-    quantity: req.body.quantity,
+    price: req.body.price,
   })
   try {
     const newCart = await cart.save()
@@ -47,6 +48,11 @@ router.patch('/:id', getCart, async (req, res) => {
   if (req.body.quantity != null) {
     res.cart.quantity = req.body.quantity
   }
+
+  if (req.body.image != null) {
+    res.cart.image = req.body.image
+  }
+
   try {
     const updatedCart = await res.cart.save()
     res.json(updatedCart)

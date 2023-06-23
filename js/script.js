@@ -57,7 +57,8 @@ function getCurrentURL() {
 
 function loadExtensionAccount() {
     const listLi = $("#extensionAccount li")
-    
+    $("#aCart").css('display', 'none');
+
     listLi.each(function(index, element) {
         $(element).css('display', 'none');
       });
@@ -72,6 +73,7 @@ function loadExtensionAccount() {
     } else {
         $('#liUser').css('display', 'block');
         $('#liSignOut').css('display', 'block');
+        $("#aCart").css('display', 'inline');
         $("#nameCustomer").text(mainCustomer['name']);
     }
 }
@@ -453,6 +455,8 @@ $(document).on('click', '#btnAddCart', function () {
                         product_id: currentProductId,
                         product_name: product['name'],
                         user_id: currentCustomerId,
+                        image: product['images'][0],
+                        price: product['price']
                     }
                     
                     createCart(data).then((result) => {
@@ -489,16 +493,109 @@ function loadProductInCart() {
     getAllCart().then((res) => {
         return res.data;
     }).then((carts) => {
-        let mainCart;
+        let divCart=""
 
         carts.forEach(cart => {
             if (cart['user_id'] === mainCustomer['_id']) {
-                mainCart.push(cart);
+                divCart += 
+                `
+                <div class="box boxCart" id="${cart['_id']}" data-product-id="${cart['product_id']}>
+                    <i class="fas fa-times btnDelCart"></i>
+                    <img src="${cart['image']}" alt="">
+                    <div class="content">
+                        <h3>${cart['product_name']}</h3>
+                        <form action="">
+                            <span>Số lượng :</span>
+                            <input type="number" name="" value="${cart['quantity']}" id="">
+                        </form>
+                        <div class="price">
+                            <strong>${conventVND(cart['price'])}</strong>
+                        </div>
+                    </div>
+                </div>
+                `
             }
         });
 
-        console.log(mainCart);
+        $("#myCartContext").html(divCart)
+
     }).catch((err) => {
         console.error(err);
     })
 }
+
+$(document).on('input', '.boxCart input[type="number"]', function() {
+    const cartId = $(this).closest(".boxCart").attr("id");
+    
+    if ($(this).val() === "") {
+        $(this).val(1)
+    }
+
+    const data = {
+        quantity: $(this).val()
+    }
+
+    updatedCart(cartId, data)
+})
+
+$(document).on('click', '.boxCart .btnDelCart', function() {
+    const currentBoxCart = $(this).closest(".boxCart")
+    Swal.fire({
+        title: 'Thông báo',
+        text: 'Xác nhận xoá khỏi giỏ hàng',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Không'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            const cartId = currentBoxCart.attr("id");
+            deleteCart(cartId).then((result) => {
+                if (result) {
+                    currentBoxCart.remove();
+                } else {
+                    Swal.fire({
+                        title: "Lỗi",
+                        text: "Xoá không thành công",
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                }
+            })
+        }
+    })
+})
+
+$("form").on("submit", function() {
+    event.preventDefault();
+
+    const listBoxCart = $(".boxCart")
+
+    if (listBoxCart.length === 0) {
+        Swal.fire({
+            title: "Thông báo",
+            text: "Vui lòng thêm sản phẩm vào giỏ hàng để thực hiện",
+            icon: "error",
+            confirmButtonText: "OK"
+        });
+    } else {
+        var buttonId = $(document.activeElement).attr("id");
+
+        if (buttonId === "btnConfirmOrder") {
+            const arrayForm = $(this).serializeArray();
+
+            const nameCustomer = arrayForm[0].value;
+            const phone = arrayForm[1].value;
+            const address = arrayForm[4].value + arrayForm[3].value + arrayForm[2].value;
+
+            const data = {
+                user_id: JSON.parse(localStorage.getItem('loggedInUser'))['_id'],
+                user_name: nameCustomer,
+                address: address,
+                phone: phone,
+                status: "Chờ xác nhận"
+            }
+        }
+    }
+    
+})
