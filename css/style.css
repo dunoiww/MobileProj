@@ -735,10 +735,12 @@ footer .footer-info {
 }
 
 .about .row .content p {
-  font-size: 1.4rem;
-  line-height: 2.5;
+  font-size: 1.8rem;
+  line-height: 2;
   color: #666;
-  padding: 1rem 0;
+  padding: 5px 0;
+  margin: 10px 0 10px 0;
+  text-align: justify;
 }
 
 .about .icons-container {
