@@ -351,6 +351,7 @@ section {
 /* List product */
 .lst-product .item {
   position: relative;
+  height: 280px;
   background-color: var(--white-color);
   border-radius: 8px;
   box-shadow: 0 4px 6px #00000029;

@@ -23,6 +23,16 @@ export function getProduct(id) {
         })
 }
 
+export function getSomeProduct(limit) {
+    return axios.get(productAPI + 'limit/' + limit)
+        .then((data) => {
+            console.log("Get product successful");
+            return data;
+        }).catch((err) => {
+            console.error(err);
+        })
+}
+
 export function createProduct(data) {
     return axios.post(productAPI, data)
         .then(() => {

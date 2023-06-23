@@ -126,8 +126,11 @@ $(document).ready(function() {
                 }
                 
                 createProduct(data).then((result) => {
-                    console.log(result);
+                    if (result) {
+                        loadProduct();
+                    }
                 })
+
             })
         };
             
