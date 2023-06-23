@@ -1,7 +1,7 @@
 import { currentCustomer, setCustomer, conventVND } from "./const.js";
 
 import { getAllUser, getUser, createUser, deleteUser} from "./../controllers/user.js"
-import { getAllProduct, getSomeProduct, getProductBrand, getProductSortByPrice } from "./../controllers/product.js"
+import { getAllProduct, getSomeProduct, getProductBrand, getProductSortByPrice, getProduct } from "./../controllers/product.js"
 
 let mainCustomer = currentCustomer; // customer
 console.log(mainCustomer);
@@ -51,7 +51,7 @@ function getCurrentURL() {
         currentURL = window.location.href;
     }
 
-    return currentURL.split('/').pop().replace('.html', '')
+    return currentURL.split('/').pop().split('.')[0];
 }
 
 function loadProduct(idDiv, products) {
@@ -86,6 +86,17 @@ function loadProduct(idDiv, products) {
     divContent.html(divHTML)
 }
 
+function getIdProduct() {
+    let currentURL
+    if (window.cordova) {
+        currentURL = navigator.splashscreen.getCurrentPageUrl();
+    } else {
+        currentURL = window.location.href;
+    }
+
+    return currentURL.split('?')[1];
+}
+
 // load
 $(document).ready(function() {
     let mainHTML = getCurrentURL();
@@ -99,6 +110,10 @@ $(document).ready(function() {
             break;
         case 'products':
             loadProductInPageProducts();
+            break;
+        case 'detailProduct':
+            loadDetailProduct(getIdProduct());
+            // console.log(getIdProduct());
             break;
     }
 })
@@ -324,3 +339,21 @@ $(document).on('click', '.sortProduct', function() {
         console.error(err)
     })
 })
+
+// Detail product
+function loadDetailProduct(id) {
+    // getProduct(id).then((res) => {
+    //     return res.data
+    // }).then((product) => {
+    //     $("#nameProduct").text(product['name']);
+
+    //     // images
+    //     let divImageHTML="";
+        
+        
+
+    //     // $("#slideImages").html(divImageHTML);
+    // }).catch((err) => {
+    //     console.error(err);
+    // })
+}

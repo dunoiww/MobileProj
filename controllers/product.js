@@ -14,7 +14,7 @@ export function getAllProduct() {
 }
 
 export function getProduct(id) {
-    return axios.get(productAPI + id)
+    return axios.get(productAPI + 'id/'+ id)
         .then((data) => {
             console.log("Get product successful");
             return data;
