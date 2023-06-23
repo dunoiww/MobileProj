@@ -1,10 +1,10 @@
+import { currentCustomer, setCustomer, conventVND } from "./const.js";
+
 import { getAllUser, getUser, createUser, deleteUser} from "./../controllers/user.js"
+import { getSomeProduct } from "./../controllers/product.js"
 
-let currentCustomer = null; // customer
-
-
-const originUrl = window.location.origin; // origin link
-
+let mainCustomer = currentCustomer; // customer
+console.log(mainCustomer);
 
 let searchForm = document.querySelector('.header-page .search-form');
 
@@ -42,6 +42,25 @@ $("#btnToTop").on("click", function() {
     document.documentElement.scrollTop = 0;
 });
 
+$(document).ready(function() {
+    let currentURL
+    if (window.cordova) {
+        currentURL = navigator.splashscreen.getCurrentPageUrl();
+    } else {
+        currentURL = window.location.href;
+    }
+
+    let mainHTML = currentURL.split('/').pop().replace('.html', '');
+    console.log(mainHTML);
+    switch(mainHTML) {
+        case 'home':
+            // loadNewProductInHome();
+            loadSpecialProductInHome();
+            break;
+    }
+
+})
+
 // login
 $("form").on("submit", function() {
     event.preventDefault();
@@ -66,8 +85,9 @@ $("form").on("submit", function() {
                             console.log('admin');
                         }
                         else {
-                            currentCustomer = user;
-                            console.log(currentCustomer);
+                            mainCustomer = user;
+                            console.log(mainCustomer);
+                            setCustomer(mainCustomer);
                         }
 
                         isLogin = true;
@@ -164,3 +184,85 @@ $("form").on("submit", function(event) {
         })
     }
 });
+
+
+// Home
+function loadNewProductInHome() {
+    getSomeProduct(10).then((res) => {
+        return res.data;
+    }).then((products) => {
+        let divNewProductContent = $('#newProductContent');
+        
+        products.forEach(product => {
+            let priceVND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product['price']);
+            
+            let divProduct = `
+            <div class="item">
+                            <a href="#">
+                                <img src="images/pro-1.png" alt="Điện thoại nổi bật">
+                            </a>
+                            <a href="#" class="item-des text-decoration-none">
+                                <div class="item-des-content">
+                                    <h4>iPhone 13(128gb) chính hãng VN/A</h4>
+                                </div>
+                                <div class="item-des-price">
+                                    <span>19.000.000 đ</span>
+                                </div>
+                            </a>
+                        </div>
+            `
+
+            divNewProductContent.append(divProduct)
+
+            // divHTML += '<div class="item">'
+            // divHTML += '<a href="#">'
+            // divHTML += '<img src="images/pro-1.png" alt="Điện thoại nổi bật">'
+            // divHTML += '</a>'
+            // divHTML += '<a href="#" class="item-des text-decoration-none">'
+            // divHTML += '<div class="item-des-content">'
+            // divHTML += '<h4>' + product['name'] + '</h4>'
+            // divHTML += '</div>'
+            // divHTML += '<div class="item-des-price">'
+            // divHTML += '<span>' + priceVND + '</span>'
+            // divHTML += '</div>'
+            // divHTML += '</a>'
+            // divHTML += '</div>'
+        });
+
+        
+    })
+}
+
+function loadSpecialProductInHome() {
+    getSomeProduct(20).then((res) => {
+        return res.data;
+    }).then((products) => {
+        let divSpecialProductContent = $('#specialProductContent');
+        
+        products.forEach(product => {
+            const priceVND = conventVND(product['price']);
+            
+            let divProduct = `
+            <div class="col-lg-3 col-sm-6 col-6">
+                <div class="item p-3">
+                    <div class="item-img">
+                        <a href="#"><img src=${product['images'][0]} style="width: 150px; height: 170px"
+                            title="${product['name']}" alt=""></a>
+                    </div>
+                                
+                    <div class="info">
+                        <a class="text-decoration-none info-text" href="#"> ${product['name']}</a>
+                        <span class="info-price">
+                            <strong>${priceVND}</strong>
+                        </span>
+                    </div>
+                    
+
+                </div>
+            </div>
+            `
+
+            divSpecialProductContent.append(divProduct)
+        });
+    })
+} 

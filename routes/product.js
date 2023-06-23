@@ -12,8 +12,25 @@ router.get('/', async (req, res) => {
   }
 })
 
+// Getting limit
+router.get('/limit/:limit', async (req, res) => {
+  try {
+    const limit = req.params.limit;
+
+    const product = await Product.find().limit(limit);
+    
+    if (product == null) {
+      return res.status(404).json({ message: limit })
+    }
+
+    res.json(product)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 // Getting One
-router.get('/:id', getProduct, (req, res) => {
+router.get('/id/:id', getProduct, (req, res) => {
   res.json(res.product)
 })
 

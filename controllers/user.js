@@ -3,6 +3,7 @@ import axios from 'https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm';
 
 var userAPI = API_URL + 'user/';
 
+
 export function getAllUser() {
     return axios.get(userAPI)
         .then((res) => {
