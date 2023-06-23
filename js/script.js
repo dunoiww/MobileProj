@@ -1,4 +1,6 @@
 import { currentCustomer, setCustomer, conventVND } from "./const.js";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 import { getAllUser, getUser, createUser, deleteUser} from "./../controllers/user.js"
 import { getAllProduct, getSomeProduct, getProductBrand, getProductSortByPrice, getProduct } from "./../controllers/product.js"
@@ -161,6 +163,17 @@ $("form").on("submit", function() {
                     icon: "error",
                     confirmButtonText: "OK"
                 });
+            }
+
+            else {
+                Swal.fire ({
+                    title: "Thành công",
+                    text: "Đăng nhập thành công!",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                }).then((result) => {
+                    window.location.href = "home.html";
+                })
             }
         }).catch((err) => {
             console.error(err);
@@ -357,3 +370,36 @@ function loadDetailProduct(id) {
     //     console.error(err);
     // })
 }
+
+
+//gửi email khi quên mật khẩu
+const nodemailer = require("nodemailer");
+
+const email = document.querySelector("#email_forgetpass");
+console.log(email);
+
+// Tạo transporter (địa chỉ email và mật khẩu của tài khoản Gmail gửi email)
+let transporter = nodemailer.createTransport({
+  service: "Gmail",
+  auth: {
+    user: "helpercustomerasp@gmail.com",
+    pass: "@N123456",
+  },
+});
+
+// Tạo nội dung email (HTML)
+let mailOptions = {
+  from: "helpercustomerasp@gmail.com",
+  to: "recipient-email@example.com",
+  subject: "Mã xác nhận",
+  html: "<p>Mã xác nhận của bạn là: 123456</p>",
+};
+
+// Gửi email
+transporter.sendMail(mailOptions, function (error, info) {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("Email sent: " + info.response);
+  }
+});
