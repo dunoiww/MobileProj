@@ -203,6 +203,17 @@ $("form").on("submit", function() {
                     confirmButtonText: "OK"
                 });
             }
+
+            else {
+                Swal.fire ({
+                    title: "Thành công",
+                    text: "Đăng nhập thành công!",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                }).then((result) => {
+                    window.location.href = "home.html";
+                })
+            }
         }).catch((err) => {
             console.error(err);
         })
