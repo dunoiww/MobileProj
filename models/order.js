@@ -6,10 +6,6 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  product_name: {
-    type: String,
-    required: true
-  },
   user_id: {
     type: String,
     required: true
@@ -19,6 +15,10 @@ const orderSchema = new mongoose.Schema({
     required: true
   },
   quantity: {
+    type: Number,
+    required: true
+  },
+  rest_quantity: {
     type: Number,
     required: true
   },

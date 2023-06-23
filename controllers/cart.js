@@ -3,7 +3,7 @@ import axios from 'https://cdn.jsdelivr.net/npm/axios@1.3.5/+esm';
 
 var cartAPI = API_URL + 'cart/';
 
-function getAllCart() {
+export function getAllCart() {
     axios.get(cartAPI)
     .then((data) => {
         console.log("Get all cart successful");
@@ -13,7 +13,7 @@ function getAllCart() {
     })
 }
 
-function getCart(id) {
+export function getCart(id) {
     axios.get(cartAPI + id)
     .then((data) => {
         console.log("Get cart successful");
@@ -23,20 +23,35 @@ function getCart(id) {
     })
 }
 
-function createCart(data) {
+export function createCart(data) {
     axios.post(cartAPI, data)
     .then(() => {
         console.log("Create cart successful");
+        return true;
     }).catch((err) => {
         console.error(err);
+        return false;
     })
 }
 
-function deleteCart(id) {
+export function deleteCart(id) {
     axios.delete(cartAPI + id)
     .then((data) => {
         console.log("Delete cart successful");
+        return true;
     }).catch((err) => {
         console.error(err);
+        return false;
     })
+}
+
+export function updateOrder(id, data) {
+    return axios.patch(cartAPI + id, data)
+        .then(() => {
+            console.log("Update cart successful");
+            return true;
+        }).catch((err) => {
+            console.error(err);
+            return false;
+        })
 }

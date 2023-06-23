@@ -14,31 +14,44 @@ export function getAllProduct() {
 }
 
 export function getProduct(id) {
-    axios.get(productAPI + id)
-    .then((data) => {
-        console.log("Get product successful");
-        return data;
-    }).catch((err) => {
-        console.error(err);
-    })
+    return axios.get(productAPI + id)
+        .then((data) => {
+            console.log("Get product successful");
+            return data;
+        }).catch((err) => {
+            console.error(err);
+        })
 }
 
 export function createProduct(data) {
     return axios.post(productAPI, data)
-    .then(() => {
-        console.log("Create product successful");
-        return true;
-    }).catch((err) => {
-        console.error(err);
-        return false;
-    })
+        .then(() => {
+            console.log("Create product successful");
+            return true;
+        }).catch((err) => {
+            console.error(err);
+            return false;
+        })
 }
 
 export function deleteProduct(id) {
-    axios.delete(productAPI + id)
-    .then((data) => {
-        console.log("Delete product successful");
-    }).catch((err) => {
-        console.error(err);
-    })
+    return axios.delete(productAPI + id)
+        .then((data) => {
+            console.log("Delete product successful");
+            return true;
+        }).catch((err) => {
+            console.error(err);
+            return false;
+        })
+}
+
+export function updateProduct(id, data) {
+    return axios.patch(productAPI + id, data)
+        .then(() => {
+            console.log("Update product successful");
+            return true;
+        }).catch((err) => {
+            console.error(err);
+            return false;
+        })
 }

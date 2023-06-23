@@ -14,24 +14,24 @@ export function getAllUser() {
 }
 
 export function getUser(id) {
-    axios.get(userAPI + id)
-    .then((data) => {
-        console.log("Get user successful");
-        return data;
-    }).catch((err) => {
-        console.error(err);
-    })
+    return axios.get(userAPI + id)
+        .then((data) => {
+            console.log("Get user successful");
+            return data;
+        }).catch((err) => {
+            console.error(err);
+        })
 }
 
 export function createUser(data) {
     return axios.post(userAPI, data)
-    .then(() => {
-        console.log("Create user successful");
-        return true;
-    }).catch((err) => {
-        console.error(err);
-        return false;
-    })
+        .then(() => {
+            console.log("Create user successful");
+            return true;
+        }).catch((err) => {
+            console.error(err);
+            return false;
+        })
 }
 
 export function deleteUser(id) {
@@ -43,4 +43,15 @@ export function deleteUser(id) {
         console.error(err);
         return false;
     })
+}
+
+export function updateUser(id, data) {
+    return axios.patch(userAPI + id, data)
+        .then(() => {
+            console.log("Update user successful");
+            return true;
+        }).catch((err) => {
+            console.error(err);
+            return false;
+        })
 }
