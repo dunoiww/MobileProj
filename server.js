@@ -10,7 +10,7 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
 
-// app.use();
+app.use(cors())
 app.use(express.json())
 
 const userRouter = require('./routes/user')
@@ -24,12 +24,6 @@ app.use('/cart', cartRouter)
 
 const orderRouter = require('./routes/order')
 app.use('/order', orderRouter)
-
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
 const port = 3000;
 
 app.listen(port, () => console.log('Server Started'))

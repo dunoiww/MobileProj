@@ -33,6 +33,26 @@ export function getSomeProduct(limit) {
         })
 }
 
+export function getProductBrand(brand) {
+    return axios.get(productAPI + 'brand/' + brand)
+        .then((data) => {
+            console.log("Get product " + brand + " successful");
+            return data;
+        }).catch((err) => {
+            console.error(err);
+        })
+}
+
+export function getProductSortByPrice(sort) {
+    return axios.get(productAPI + 'sort/' + sort)
+        .then((data) => {
+            console.log("Get product sort by " + sort + " successful");
+            return data;
+        }).catch((err) => {
+            console.error(err);
+        })
+}
+
 export function createProduct(data) {
     return axios.post(productAPI, data)
         .then(() => {

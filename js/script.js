@@ -1,7 +1,7 @@
 import { currentCustomer, setCustomer, conventVND } from "./const.js";
 
 import { getAllUser, getUser, createUser, deleteUser} from "./../controllers/user.js"
-import { getSomeProduct } from "./../controllers/product.js"
+import { getAllProduct, getSomeProduct, getProductBrand, getProductSortByPrice } from "./../controllers/product.js"
 
 let mainCustomer = currentCustomer; // customer
 console.log(mainCustomer);
@@ -42,7 +42,8 @@ $("#btnToTop").on("click", function() {
     document.documentElement.scrollTop = 0;
 });
 
-$(document).ready(function() {
+// support
+function getCurrentURL() {
     let currentURL
     if (window.cordova) {
         currentURL = navigator.splashscreen.getCurrentPageUrl();
@@ -50,15 +51,56 @@ $(document).ready(function() {
         currentURL = window.location.href;
     }
 
-    let mainHTML = currentURL.split('/').pop().replace('.html', '');
+    return currentURL.split('/').pop().replace('.html', '')
+}
+
+function loadProduct(idDiv, products) {
+    let divContent = $(`#${idDiv}`);
+    
+    let divHTML="";
+        products.forEach(product => {
+        const priceVND = conventVND(product['price']);
+            
+        let divProduct = `<div class="col-lg-3 col-sm-6 col-6">
+                <div class="item p-3">
+                    <div class="item-img">
+                        <a href="detailProduct.html?${product['_id']}"><img src=${product['images'][0]} style="width: 150px; height: 170px"
+                            title="${product['name']}" alt=""></a>
+                    </div>
+                                
+                    <div class="info">
+                        <a class="text-decoration-none info-text" href="#"> ${product['name']}</a>
+                        <span class="info-price">
+                            <strong>${priceVND}</strong>
+                        </span>
+                    </div>
+                    
+
+                </div>
+            </div>
+            `
+
+            divHTML += divProduct
+        });
+    
+    divContent.html(divHTML)
+}
+
+// load
+$(document).ready(function() {
+    let mainHTML = getCurrentURL();
+    
     console.log(mainHTML);
+    
     switch(mainHTML) {
         case 'home':
             // loadNewProductInHome();
             loadSpecialProductInHome();
             break;
+        case 'products':
+            loadProductInPageProducts();
+            break;
     }
-
 })
 
 // login
@@ -105,6 +147,8 @@ $("form").on("submit", function() {
                     confirmButtonText: "OK"
                 });
             }
+        }).catch((err) => {
+            console.error(err);
         })
     }
 })
@@ -181,6 +225,8 @@ $("form").on("submit", function(event) {
             }
 
             createUser(data);
+        }).catch((err) => {
+            console.error(err);
         })
     }
 });
@@ -237,32 +283,44 @@ function loadSpecialProductInHome() {
     getSomeProduct(20).then((res) => {
         return res.data;
     }).then((products) => {
-        let divSpecialProductContent = $('#specialProductContent');
-        
-        products.forEach(product => {
-            const priceVND = conventVND(product['price']);
-            
-            let divProduct = `
-            <div class="col-lg-3 col-sm-6 col-6">
-                <div class="item p-3">
-                    <div class="item-img">
-                        <a href="#"><img src=${product['images'][0]} style="width: 150px; height: 170px"
-                            title="${product['name']}" alt=""></a>
-                    </div>
-                                
-                    <div class="info">
-                        <a class="text-decoration-none info-text" href="#"> ${product['name']}</a>
-                        <span class="info-price">
-                            <strong>${priceVND}</strong>
-                        </span>
-                    </div>
-                    
-
-                </div>
-            </div>
-            `
-
-            divSpecialProductContent.append(divProduct)
-        });
+        loadProduct("specialProductContent", products);
+    }).catch((err) => {
+        console.error(err);
     })
-} 
+}
+
+// Products
+function loadProductInPageProducts() {
+    getAllProduct().then((res) => {
+        return res.data;
+    }).then((products) => {
+        loadProduct("listProductContent", products);
+    }).catch((err) => {
+        console.error(err);
+    })
+}
+
+$(document).on('click', '.filterProduct', function() {
+    const href = $(this).attr("href");
+    const currentBrand = href.substr(1);
+    getProductBrand(currentBrand).then((res) => {
+        return res.data
+    }).then((products) => {
+        loadProduct("listProductContent", products)
+    }).catch((err) => {
+        console.error(err)
+    })
+})
+
+$(document).on('click', '.sortProduct', function() {
+    const href = $(this).attr("href");
+    const currentSort = href.substr(1);
+    console.log(currentSort);
+    getProductSortByPrice(currentSort).then((res) => {
+        return res.data
+    }).then((products) => {
+        loadProduct("listProductContent", products)
+    }).catch((err) => {
+        console.error(err)
+    })
+})

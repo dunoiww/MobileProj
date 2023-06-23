@@ -2,10 +2,8 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 
-var cors = require('cors')
-
 // Getting all
-router.get('/', cors(), async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const user = await User.find()
     res.json(user)

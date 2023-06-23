@@ -20,7 +20,7 @@ router.get('/limit/:limit', async (req, res) => {
     const product = await Product.find().limit(limit);
     
     if (product == null) {
-      return res.status(404).json({ message: limit })
+      return res.status(404).json({ message: err.message })
     }
 
     res.json(product)
@@ -32,6 +32,40 @@ router.get('/limit/:limit', async (req, res) => {
 // Getting One
 router.get('/id/:id', getProduct, (req, res) => {
   res.json(res.product)
+})
+
+// Filter brand
+router.get('/brand/:brand', async (req, res) => {
+  try {
+    const brand = req.params.brand;
+
+    const product = await Product.find({ brand });
+    
+    if (product == null) {
+      return res.status(404).json({ message: err.message })
+    }
+
+    res.json(product)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+// sort price
+router.get('/sort/:type', async (req, res) => {
+  try {
+    const sort = { ['price']: req.params.type == "desc" ? -1 : 1 };
+
+    const product = await Product.find().sort(sort);
+    
+    if (product == null) {
+      return res.status(404).json({ message: err.message })
+    }
+
+    res.json(product)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 })
 
 // Creating one
