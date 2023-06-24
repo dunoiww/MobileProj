@@ -437,6 +437,10 @@ section {
   padding: 15px 0;
 }
 
+.ads img {
+  border-radius: 10px;
+}
+
 /* newsletter */
 #news {
   display: flex;

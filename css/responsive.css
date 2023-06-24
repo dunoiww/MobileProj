@@ -96,7 +96,7 @@
   /* end header  */
 
   section .box-home .header::after {
-    border-top: 33px solid #00483d;
+    border-top: 33px solid #0a3964;
   }
 
   section .header {

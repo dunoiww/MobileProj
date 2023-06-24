@@ -186,6 +186,7 @@ $("form").on("submit", function() {
                     if (user['password'] === currentPassword) {
                         if (user['isAdmin']) {
                             console.log('admin');
+                            window.location.href = "./admin/admin.html";
                         }
                         else {
                             localStorage.setItem("loggedInUser", JSON.stringify(user));
