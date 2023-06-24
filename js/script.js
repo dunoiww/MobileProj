@@ -152,7 +152,15 @@ $(document).ready(function() {
 // navigation
 $(document).on('click', '#liSignOut', function()  {
     localStorage.removeItem("loggedInUser");
-    $("#aHome").click()
+    Swal.fire ({
+        title: "Thành công",
+        text: "Đăng xuất thành công!",
+        icon: "success",
+        confirmButtonText: "OK"
+    }).then((result) => {
+        window.location.href = "home.html";
+    })
+    // $("#aHome").click()
     loadExtensionAccount();
 })
 

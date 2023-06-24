@@ -7,7 +7,7 @@
     flex-basis: auto;
     flex-grow: 3;
     display: flex;
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 600;
 }
 
@@ -24,6 +24,10 @@
     height: 470px;
     overflow: hidden;
     visibility: hidden;
+}
+
+.product-details img {
+    margin: 20px;
 }
 
 .product-details .product-image {
@@ -52,10 +56,6 @@
     line-height: 25px;
     /* width: 25px; */
     color: #fd475a;
-}
-
-.product-image .love-this-button i.icon-love-2 {
-    display: none;
 }
 
 .product-center {
